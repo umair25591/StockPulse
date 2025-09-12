@@ -1,0 +1,110 @@
+{% extends "dashboard/layout.html" %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block styles %}
+<style>
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #18181b; }
+  ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 10px; }
+  ::-webkit-scrollbar-thumb:hover { background: #52525b; }
+
+  body { font-family: 'Inter', sans-serif; }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="p-6">
+
+  <div class="bg-zinc-900 rounded-xl border border-zinc-800 p-4 mb-6">
+    <div class="relative h-48 rounded-lg bg-cover bg-center"
+         style="background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2070&auto=format&fit=crop');">
+      <div class="absolute bottom-0 left-6 transform translate-y-1/2">
+        <img src="https://i.pravatar.cc/150?u=admin" alt="User Avatar" class="w-32 h-32 rounded-full border-4 border-black">
+      </div>
+    </div>
+
+    <div class="pt-20 pb-4 px-6 flex justify-between items-center">
+      <div>
+        <h3 class="text-2xl font-bold text-white">Alex Thompson</h3>
+        <p class="text-sm text-zinc-400">Lead Developer</p>
+      </div>
+      <div class="flex space-x-2">
+        <button class="px-4 py-2 text-sm font-semibold text-white bg-zinc-800 hover:bg-zinc-700 rounded-lg flex items-center">
+          <i data-lucide="message-square" class="w-4 h-4 mr-2"></i> Message
+        </button>
+        <button class="px-4 py-2 text-sm font-semibold text-black bg-green-500 hover:bg-green-600 rounded-lg flex items-center">
+          <i data-lucide="user-plus" class="w-4 h-4 mr-2"></i> Follow
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+    <div class="lg:col-span-1 space-y-6">
+      <div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+        <h4 class="text-lg font-semibold text-white mb-4">About</h4>
+        <p class="text-zinc-400 text-sm mb-4">
+          Creative and detail-oriented Front-End Developer with a passion for building intuitive and performant web applications.
+        </p>
+        <ul class="space-y-3 text-sm">
+          <li class="flex items-center"><i data-lucide="briefcase" class="w-4 h-4 mr-3 text-zinc-500"></i>Lead Developer at Lush Inc.</li>
+          <li class="flex items-center"><i data-lucide="map-pin" class="w-4 h-4 mr-3 text-zinc-500"></i>San Francisco, CA</li>
+          <li class="flex items-center"><i data-lucide="mail" class="w-4 h-4 mr-3 text-zinc-500"></i>alex.thompson@example.com</li>
+        </ul>
+      </div>
+
+      <div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+        <h4 class="text-lg font-semibold text-white mb-4">Social Links</h4>
+        <ul class="space-y-3 text-sm">
+          <li class="flex items-center"><i data-lucide="twitter" class="w-4 h-4 mr-3 text-blue-400"></i><a href="#" class="hover:text-green-500">twitter.com/alextdev</a></li>
+          <li class="flex items-center"><i data-lucide="linkedin" class="w-4 h-4 mr-3 text-blue-500"></i><a href="#" class="hover:text-green-500">linkedin.com/in/alextdev</a></li>
+          <li class="flex items-center"><i data-lucide="github" class="w-4 h-4 mr-3 text-zinc-400"></i><a href="#" class="hover:text-green-500">github.com/alextdev</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Edit Form -->
+    <div class="lg:col-span-2">
+      <div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+        <h4 class="text-lg font-semibold text-white mb-4">Edit Profile</h4>
+        <form action="#" class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label for="firstName" class="block text-sm font-medium text-zinc-400 mb-2">First Name</label>
+              <input type="text" id="firstName" value="Alex" class="w-full bg-zinc-800 border border-zinc-700 rounded-lg py-2.5 px-4 text-white focus:outline-none focus:ring-2 focus:ring-green-500">
+            </div>
+            <div>
+              <label for="lastName" class="block text-sm font-medium text-zinc-400 mb-2">Last Name</label>
+              <input type="text" id="lastName" value="Thompson" class="w-full bg-zinc-800 border border-zinc-700 rounded-lg py-2.5 px-4 text-white focus:outline-none focus:ring-2 focus:ring-green-500">
+            </div>
+          </div>
+
+          <div>
+            <label for="email" class="block text-sm font-medium text-zinc-400 mb-2">Email Address</label>
+            <input type="email" id="email" value="alex.thompson@example.com" class="w-full bg-zinc-800 border border-zinc-700 rounded-lg py-2.5 px-4 text-white focus:outline-none focus:ring-2 focus:ring-green-500">
+          </div>
+
+          <div>
+            <label for="bio" class="block text-sm font-medium text-zinc-400 mb-2">Bio</label>
+            <textarea id="bio" rows="4" class="w-full bg-zinc-800 border border-zinc-700 rounded-lg py-2.5 px-4 text-white focus:outline-none focus:ring-2 focus:ring-green-500">Creative and detail-oriented Front-End Developer...</textarea>
+          </div>
+
+          <div class="pt-4 border-t border-zinc-800 flex justify-end space-x-3">
+            <button type="button" class="px-5 py-2.5 text-sm font-semibold text-white bg-zinc-800 hover:bg-zinc-700 rounded-lg">Cancel</button>
+            <button type="submit" class="px-5 py-2.5 text-sm font-semibold text-black bg-green-500 hover:bg-green-600 rounded-lg">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+</script>
+{% endblock %}

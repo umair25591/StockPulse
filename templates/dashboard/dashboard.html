@@ -1,0 +1,79 @@
+{% extends "dashboard/layout.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+    <div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+        <div class="flex justify-between items-start">
+            <div>
+                <p class="text-sm text-zinc-500">Total Revenue</p>
+                <p class="text-3xl font-bold text-white mt-1">$54,320</p>
+            </div>
+            <div class="p-2 bg-green-500/20 rounded-lg">
+                <i data-lucide="dollar-sign" class="text-green-400"></i>
+            </div>
+        </div>
+        <p class="text-xs text-green-400 mt-2">+12.5% from last month</p>
+    </div>
+    <div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+        <div class="flex justify-between items-start">
+            <div>
+                <p class="text-sm text-zinc-500">Total Sales</p>
+                <p class="text-3xl font-bold text-white mt-1">+1,250</p>
+            </div>
+            <div class="p-2 bg-green-500/20 rounded-lg">
+                <i data-lucide="shopping-bag" class="text-green-400"></i>
+            </div>
+        </div>
+        <p class="text-xs text-green-400 mt-2">+8.2% from last month</p>
+    </div>
+    <div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+        <div class="flex justify-between items-start">
+            <div>
+                <p class="text-sm text-zinc-500">New Users</p>
+                <p class="text-3xl font-bold text-white mt-1">845</p>
+            </div>
+            <div class="p-2 bg-purple-500/20 rounded-lg">
+                <i data-lucide="user-plus" class="text-purple-400"></i>
+            </div>
+        </div>
+        <p class="text-xs text-red-400 mt-2">-2.1% from last month</p>
+    </div>
+    <div class="bg-zinc-900 p-6 rounded-xl border border-zinc-800">
+        <div class="flex justify-between items-start">
+            <div>
+                <p class="text-sm text-zinc-500">Pending Orders</p>
+                <p class="text-3xl font-bold text-white mt-1">32</p>
+            </div>
+            <div class="p-2 bg-yellow-500/20 rounded-lg">
+                <i data-lucide="loader" class="text-yellow-400"></i>
+            </div>
+        </div>
+        <p class="text-xs text-zinc-500 mt-2">Awaiting processing</p>
+    </div>
+</div>
+
+<div class="flex flex-col gap-6" style="height: 85% ;">
+    <div class="tradingview-widget-container" style="height:100%;width:100%">
+        <div id="tradingview_12345" style="height:calc(100% - 32px);width:100%"></div>
+        <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow"
+                target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+        <script type="text/javascript">
+            new TradingView.widget({
+                "autosize": true,
+                "symbol": "NASDAQ:AAPL",
+                "interval": "D",
+                "timezone": "Etc/UTC",
+                "theme": "dark",
+                "style": "1",
+                "locale": "en",
+                "enable_publishing": false,
+                "allow_symbol_change": true,
+                "container_id": "tradingview_12345"
+            });
+        </script>
+    </div>
+</div>
+{% endblock %}
