@@ -2,7 +2,7 @@ import os
 from flask import Flask, render_template, request, jsonify
 import pandas as pd
 from werkzeug.utils import secure_filename
-from spark_logic import create_spark_session, engineer_features, detect_anomalies_from_transformed, load_csv_with_fix, transform_features
+from spark_logic import create_spark_session, engineer_features, detect_anomalies_KMeans, load_csv_with_fix, transform_features, detect_anomalies_GMM
 from helper import allowed_file
 import numpy as np
 
@@ -37,7 +37,7 @@ def profile():
 
 @app.route('/run_analysis', methods=['POST'])
 def run_analysis():
-    # --- Part 1: Robust Input Validation (from the first snippet) ---
+    # --- Part 1: Robust Input Validation ---
     if 'file' not in request.files:
         return jsonify({'error': 'No file part in the request'}), 400
     
@@ -46,124 +46,126 @@ def run_analysis():
     if file.filename == '':
         return jsonify({'error': 'No file selected'}), 400
 
-    if file and allowed_file(file.filename):
-        # --- Part 2: Secure File & Path Management (from the first snippet) ---
-        
-        # Sanitize the filename to prevent security issues
+    # --- CHANGE #1: GET USER PARAMETERS FROM THE REQUEST FORM ---
+    # Get the selected model, defaulting to 'kmeans' if not provided
+    model_choice = request.form.get('model', 'kmeans')
+    
+    # Get the threshold, defaulting to 3.0. Includes error handling for non-numeric values.
+    try:
+        threshold = float(request.form.get('threshold', 3.0))
+    except (ValueError, TypeError):
+        return jsonify({'error': 'Invalid threshold value provided.'}), 400
+
+    if file and allowed_file(file.filename): # Make sure allowed_file function exists
+        # --- Part 2: Secure File & Path Management ---
         filename = secure_filename(file.filename)
-        
-        # Define input and output paths safely
         input_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         
-        # Use the output naming convention from the second snippet
-        output_filename = filename.rsplit('.', 1)[0] + '_results.csv'
-        output_path = os.path.join('static', 'results', output_filename)
+        # --- CHANGE #2: MAKE OUTPUT FILENAME MORE DESCRIPTIVE ---
+        output_filename = f"{filename.rsplit('.', 1)[0]}_{model_choice}_results.csv"
+        output_path = os.path.join(app.config.get('RESULTS_FOLDER', 'static/results'), output_filename)
         
-        # Create directories if they don't exist to prevent errors
         os.makedirs(os.path.dirname(input_path), exist_ok=True)
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
         
         file.save(input_path)
 
         try:
-            results = runModel(input_path, output_path)
+            # --- CHANGE #3: PASS NEW PARAMETERS TO YOUR MODEL FUNCTION ---
+            # IMPORTANT: Your runModel function must be updated to accept these new arguments
+            results = runModel(
+                input_path=input_path, 
+                output_path=output_path, 
+                model_choice=model_choice, 
+                threshold=threshold
+            )
 
-            columns_for_visualization = [
-                'Date', 
-                'Close', 
-                'High', 
-                'Low', 
-                'Open',
-                'Volume',
-                'cluster', 
-                'distance'
-            ]
+            if not results or "clustered" not in results or "anomalies" not in results:
+                return jsonify({'error': 'Model execution failed to produce valid results.'}), 500
 
             clustered_df = results["clustered"]
             anomalies_df = results["anomalies"]
 
-            # --- FIX STARTS HERE: FORMAT THE DATE COLUMN ---
-            # Ensure the 'Date' column is a proper datetime object
-            clustered_df['Date'] = pd.to_datetime(clustered_df['Date'])
-            anomalies_df['Date'] = pd.to_datetime(anomalies_df['Date'])
+            # Format the 'Date' column for consistent JSON serialization
+            for df in [clustered_df, anomalies_df]:
+                if not df.empty and 'Date' in df.columns:
+                    df['Date'] = pd.to_datetime(df['Date']).dt.strftime('%Y-%m-%d')
 
-            # Format the 'Date' column to the 'YYYY-MM-DD' string format
-            clustered_df['Date'] = clustered_df['Date'].dt.strftime('%Y-%m-%d')
-            anomalies_df['Date'] = anomalies_df['Date'].dt.strftime('%Y-%m-%d')
-            # --- FIX ENDS HERE ---
+            # --- CHANGE #4: SAFER COLUMN SELECTION FOR ROBUSTNESS ---
+            columns_for_visualization = [
+                'Date', 'Close', 'High', 'Low', 'Open',
+                'Volume', 'cluster', 'distance'
+            ]
 
-            clustered_for_frontend = results["clustered"][columns_for_visualization]
-            anomalies_for_frontend = pd.DataFrame(columns=columns_for_visualization)
+            # Helper to select only columns that actually exist in a dataframe
+            def safe_select_columns(df, columns):
+                existing_cols = [col for col in columns if col in df.columns]
+                return df[existing_cols]
 
-            if not results["anomalies"].empty:
-                anomalies_for_frontend = results["anomalies"][columns_for_visualization]
+            clustered_for_frontend = safe_select_columns(clustered_df, columns_for_visualization)
+            anomalies_for_frontend = safe_select_columns(anomalies_df, columns_for_visualization)
 
             return jsonify({
                 "message": "Analysis complete!",
-                "output_path": output_path,
                 "summary": {
-                    "rows": len(results["featured"]),
-                    "anomalies": len(results["anomalies"]),
-                    "clusters": int(results["clustered"]["cluster"].nunique())
+                    "rows": len(results.get("featured", clustered_df)),
+                    "anomalies": len(anomalies_df),
+                    "clusters": int(clustered_df["cluster"].nunique()) if not clustered_df.empty and 'cluster' in clustered_df.columns else 0
                 },
                 "results": {
                     "clustered": clustered_for_frontend.to_dict(orient="records"),
                     "anomalies": anomalies_for_frontend.to_dict(orient="records"),
                 },
-                "threshold": results["threshold"]
+                "threshold": results.get("threshold", threshold) # Return the threshold used
             })
             
         except Exception as e:
-            print(f"An error occurred during analysis: {e}")
-            return jsonify({'error': f'An error occurred during Spark processing: {str(e)}'}), 500
+            # Using app.logger provides better debugging information in your server logs
+            app.logger.error(f"An error occurred during analysis for {filename}: {e}", exc_info=True)
+            return jsonify({'error': f'An error occurred during data processing: {str(e)}'}), 500
     
     return jsonify({'error': 'Invalid file type. Please upload a CSV.'}), 400
 
 
-
-
-def runModel(input_path, output_path):
+def runModel(input_path, output_path, model_choice='kmeans', threshold=3.0):
+    """
+    Main analysis pipeline that dynamically selects the clustering model.
+    """
     spark = create_spark_session()
     print("✅ Spark session created.")
 
-    # ---------------- STEP 1: Load Data ----------------
+    # ---------------- STEP 1, 2, 3: Data Prep (No changes needed) ----------------
     initial_df = load_csv_with_fix(input_path, spark)
-    print("✅ Data loaded.")
-    print(f"Schema of initial_df: {initial_df.printSchema()}")
-    print("Sample rows from initial_df:")
-    initial_df.show(5, truncate=False)
-
-    # ---------------- STEP 2: Feature Engineering ----------------
     featured_df = engineer_features(spark, initial_df)
-    print("✅ Feature engineering complete.")
-    print("Schema of featured_df:")
-    featured_df.printSchema()
-    print("Sample rows from featured_df:")
-    featured_df.show(5, truncate=False)
-
-    # ---------------- STEP 3: Feature Transformation ----------------
     transformed_df = transform_features(featured_df)
-    print("✅ Features transformed.")
-    print("Schema of transformed_df:")
-    transformed_df.printSchema()
-    print("Sample rows from transformed_df:")
-    transformed_df.select("Date", "Close", "features").show(5, truncate=False)
+    print("✅ Data loading and feature engineering complete.")
+    
+    # ---------------- STEP 4: DYNAMIC Anomaly Detection ----------------
+    print(f"▶️ Running analysis with model: '{model_choice}' and threshold multiplier: {threshold}")
+    
+    if model_choice == 'kmeans':
+        df_clustered, anomalies_df, centers, threshold_value = detect_anomalies_KMeans(
+            transformed_df, 
+            threshold_std_dev=threshold
+        )
+    elif model_choice == 'gmm':
+        df_clustered, anomalies_df, centers, threshold_value = detect_anomalies_GMM(
+            transformed_df,
+            threshold_std_dev=threshold
+        )
+    else:
+        spark.stop()
+        raise ValueError(f"Unsupported model type: '{model_choice}'. Please choose 'kmeans' or 'gmm'.")
 
-    # ---------------- STEP 4: Anomaly Detection ----------------
-    df_clustered, anomalies_df, centers, threshold = detect_anomalies_from_transformed(transformed_df)
     print("✅ Anomaly detection complete.")
-    print(f"Anomaly threshold: {threshold}")
-    print(f"Clustered row count: {df_clustered.count()}, Anomalies count: {anomalies_df.count()}")
+    print(f"   - Anomaly threshold calculated: {threshold_value:.4f}")
+    print(f"   - Clustered row count: {df_clustered.count()}, Anomalies count: {anomalies_df.count()}")
 
     # ---------------- STEP 5: Convert to Pandas ----------------
     featured_pdf = featured_df.toPandas()
     clustered_pdf = df_clustered.toPandas()
     anomalies_pdf = anomalies_df.toPandas()
-
-    print("✅ Converted to Pandas.")
-    print(f"featured_pdf shape: {featured_pdf.shape}, columns: {featured_pdf.columns.tolist()}")
-    print(f"clustered_pdf shape: {clustered_pdf.shape}, columns: {clustered_pdf.columns.tolist()}")
-    print(f"anomalies_pdf shape: {anomalies_pdf.shape}, columns: {anomalies_pdf.columns.tolist()}")
+    print("✅ Converted results to Pandas.")
 
     # ---------------- STEP 6: Save Anomalies ----------------
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
@@ -173,15 +175,14 @@ def runModel(input_path, output_path):
     spark.stop()
     print("✅ Spark session stopped.")
 
+    # Return the results dictionary
     return {
         "featured": featured_pdf,
         "clustered": clustered_pdf,
         "anomalies": anomalies_pdf,
         "centers": centers,
-        "threshold": threshold
+        "threshold": threshold_value # Return the actual calculated threshold
     }
-
-
 
 if __name__ == '__main__':
     app.run(debug=False)

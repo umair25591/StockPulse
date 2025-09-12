@@ -1,200 +1,162 @@
 $(document).ready(function () {
-    let uploadedFile = null;
     let stockChart = null;
+    let analysisData = {}; // Global variable to store the full API response
+    let uploadedFile = null;
 
-    // A color palette for the clusters. You can add more colors if needed.
-    const CLUSTER_COLORS = [
-        '#38bdf8', // Light Blue
-        '#4ade80', // Green
-        '#facc15', // Yellow
-        '#fb923c', // Orange
-        '#f87171', // Red
-        '#a78bfa', // Purple
-        '#fb7185', // Pink
-    ];
+    // --- UI Elements ---
+    const $runAnalysisBtn = $("#run-analysis");
+    const $buttonText = $("#button-text");
+    const $loader = $("#loader");
+    const $csvFileInput = $("#csv-file");
+    const $modelSelector = $("#model-selector");
+    const $thresholdSlider = $("#threshold-slider");
+    const $thresholdValue = $("#threshold-value");
+    const $chartTabs = $("#chart-tabs");
+    const $welcomeMessage = $("#welcome-message");
+    const $resultsContainer = $("#results-container");
+    const $summaryCards = $("#summary-cards");
+    const $stockChartCanvas = $("#stock-chart");
 
-    // ========== Utility Functions ==========
-    function enableRunButton(enabled) {
-        $("#run-analysis").prop("disabled", !enabled);
+    // --- Chart Rendering Functions ---
+
+    function destroyActiveChart() {
+        if (stockChart) stockChart.destroy();
     }
 
-    function resetRunButton() {
-        $("#run-analysis").prop("disabled", false).text("Run Analysis");
+    function renderClusterChart() {
+        destroyActiveChart();
+        const { clustered, anomalies } = analysisData.results;
+        stockChart = new Chart($stockChartCanvas[0].getContext("2d"), {
+            type: 'candlestick',
+            data: {
+                datasets: [{
+                    label: 'Stock Price (OHLC)',
+                    data: clustered.map(d => ({ x: new Date(d.Date).valueOf(), o: d.Open, h: d.High, l: d.Low, c: d.Close })),
+                }, {
+                    type: 'scatter',
+                    label: 'Anomaly',
+                    data: anomalies.map(d => ({ x: new Date(d.Date).valueOf(), y: d.Close })),
+                    backgroundColor: 'rgba(239, 68, 68, 0.8)',
+                    radius: 7,
+                    borderColor: '#ffffff',
+                    borderWidth: 2,
+                    pointStyle: 'rectRot',
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, scales: { x: { type: 'time', time: { unit: 'month' } }, y: { title: { display: true, text: 'Price' } } }, plugins: { legend: { labels: { color: '#e5e7eb' } }, zoom: { pan: { enabled: true, mode: 'x' }, zoom: { wheel: { enabled: true }, mode: 'x' } } } }
+        });
     }
 
-    function setRunButtonProcessing() {
-        $("#run-analysis").prop("disabled", true).text("Processing...");
+    function renderDistanceChart() {
+        destroyActiveChart();
+        const { clustered } = analysisData.results;
+        stockChart = new Chart($stockChartCanvas[0].getContext("2d"), {
+            type: 'line',
+            data: {
+                labels: clustered.map(d => d.Date),
+                datasets: [{
+                    label: 'Distance from Cluster Center',
+                    data: clustered.map(d => d.distance),
+                    borderColor: '#38bdf8',
+                    backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                    fill: true,
+                    borderWidth: 1.5,
+                    pointRadius: 0,
+                    tension: 0.3
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, scales: { x: { type: 'time', time: { unit: 'month' }, ticks: { color: '#9ca3af' }, grid: { color: 'rgba(255, 255, 255, 0.05)' } }, y: { title: { display: true, text: 'Distance Metric' }, ticks: { color: '#9ca3af' }, grid: { color: 'rgba(255, 255, 255, 0.05)' } } }, plugins: { legend: { position: 'top', labels: { color: '#e5e7eb' } }, annotation: { annotations: { thresholdLine: { type: 'line', yMin: analysisData.threshold, yMax: analysisData.threshold, borderColor: 'rgb(255, 99, 132)', borderWidth: 2, borderDash: [6, 6], label: { content: `Threshold (${analysisData.threshold})`, enabled: true, position: 'end', backgroundColor: 'rgba(255, 99, 132, 0.8)' } } } } } }
+        });
+    }
+
+    function renderVolumeChart() {
+        destroyActiveChart();
+        const { clustered } = analysisData.results;
+        stockChart = new Chart($stockChartCanvas[0].getContext("2d"), {
+            type: 'bar',
+            data: {
+                labels: clustered.map(d => d.Date),
+                datasets: [{
+                    label: 'Volume',
+                    data: clustered.map(d => d.Volume),
+                    backgroundColor: clustered.map(d => d.Close >= d.Open ? 'rgba(16, 185, 129, 0.7)' : 'rgba(239, 68, 68, 0.7)'),
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, scales: { x: { type: 'time', time: { unit: 'month' }, ticks: { color: '#9ca3af' }, grid: { display: false } }, y: { title: { display: true, text: 'Volume' }, ticks: { color: '#9ca3af' }, grid: { color: 'rgba(255, 255, 255, 0.05)' } } }, plugins: { legend: { display: false } } }
+        });
     }
 
     function renderSummaryCards(summary) {
-        const cardsHtml = `
-            <div class="bg-gray-700 p-4 rounded-lg">
-                <h3 class="text-sm font-medium text-gray-400">Total Rows</h3>
+        $summaryCards.html(`
+            <div class="bg-gray-800/50 p-5 rounded-lg glass-effect fade-in-up">
+                <h3 class="text-sm font-medium text-gray-400">Total Rows Processed</h3>
                 <p class="mt-1 text-3xl font-semibold">${summary.rows.toLocaleString()}</p>
             </div>
-            <div class="bg-gray-700 p-4 rounded-lg">
+            <div class="bg-gray-800/50 p-5 rounded-lg glass-effect fade-in-up" style="animation-delay: 100ms;">
                 <h3 class="text-sm font-medium text-gray-400">Clusters Found</h3>
                 <p class="mt-1 text-3xl font-semibold">${summary.clusters}</p>
             </div>
-            <div class="bg-gray-700 p-4 rounded-lg">
+            <div class="bg-gray-800/50 p-5 rounded-lg glass-effect fade-in-up" style="animation-delay: 200ms;">
                 <h3 class="text-sm font-medium text-gray-400">Anomalies Detected</h3>
                 <p class="mt-1 text-3xl font-semibold">${summary.anomalies}</p>
-            </div>
-        `;
-        $("#summary-cards").html(cardsHtml);
+            </div>`);
     }
 
-    function renderChart(clusteredData, anomaliesData) {
-        if (!clusteredData || clusteredData.length === 0) {
-            alert("No data available to render the chart.");
-            return;
-        }
+    // --- Event Handlers ---
 
-        const ctx = $("#stock-chart")[0].getContext("2d");
-
-        // Prepare datasets for the chart
-        const datasets = [];
-
-        // 1. Base line for the closing price
-        datasets.push({
-            type: 'line',
-            label: 'Close Price',
-            data: clusteredData.map(d => ({ x: d.Date, y: d.Close })),
-            borderColor: 'rgba(156, 163, 175, 0.4)', // Gray
-            borderWidth: 1,
-            pointRadius: 0, // No points on the base line
-            tension: 0.1,
-        });
-
-        // 2. One scatter dataset for each cluster
-        const uniqueClusters = [...new Set(clusteredData.map(d => d.cluster))].sort((a, b) => a - b);
-        
-        uniqueClusters.forEach(clusterId => {
-            const clusterPoints = clusteredData
-                .filter(d => d.cluster === clusterId)
-                .map(d => ({ x: d.Date, y: d.Close }));
-
-            datasets.push({
-                type: 'scatter',
-                label: `Cluster ${clusterId}`,
-                data: clusterPoints,
-                backgroundColor: CLUSTER_COLORS[clusterId % CLUSTER_COLORS.length],
-                pointRadius: 3,
-            });
-        });
-
-        // 3. A separate scatter dataset for anomalies
-        if (anomaliesData && anomaliesData.length > 0) {
-            datasets.push({
-                type: 'scatter',
-                label: 'Anomaly',
-                data: anomaliesData.map(d => ({ x: d.Date, y: d.Close })),
-                backgroundColor: 'red',
-                pointRadius: 6,
-                pointBorderColor: '#fff',
-                pointBorderWidth: 2,
-            });
-        }
-        
-        // Destroy the old chart instance if it exists
-        if (stockChart) {
-            stockChart.destroy();
-        }
-
-        stockChart = new Chart(ctx, {
-            data: { datasets },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        type: 'time',
-                        time: {
-                            unit: 'month',
-                            tooltipFormat: 'MMM dd, yyyy',
-                        },
-                        title: {
-                            display: true,
-                            text: 'Date'
-                        },
-                        ticks: { color: '#9ca3af' }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Close Price'
-                        },
-                        ticks: { color: '#9ca3af' }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        position: 'top',
-                        labels: { color: '#e5e7eb' }
-                    },
-                    tooltip: {
-                        mode: 'index',
-                        intersect: false,
-                    },
-                    zoom: {
-                        pan: {
-                            enabled: true,
-                            mode: 'x',
-                        },
-                        zoom: {
-                            wheel: { enabled: true },
-                            pinch: { enabled: true },
-                            mode: 'x',
-                        }
-                    }
-                },
-                interaction: {
-                    mode: 'nearest',
-                    axis: 'x',
-                    intersect: false
-                }
-            }
-        });
-    }
-
-    // ========== Event Handlers ==========
-    $("#csv-file").on("change", function (e) {
-        if (e.target.files.length > 0) {
-            uploadedFile = e.target.files[0];
-            enableRunButton(true);
-        } else {
-            uploadedFile = null;
-            enableRunButton(false);
-        }
+    $csvFileInput.on("change", (e) => {
+        uploadedFile = e.target.files.length > 0 ? e.target.files[0] : null;
+        $runAnalysisBtn.prop("disabled", !uploadedFile);
     });
 
-    $("#run-analysis").on("click", function () {
-        if (!uploadedFile) return alert("Please upload a CSV file first.");
+    $thresholdSlider.on("input", function() {
+        $thresholdValue.text(parseFloat($(this).val()).toFixed(1));
+    });
 
-        setRunButtonProcessing();
+    $runAnalysisBtn.on("click", function () {
+        if (!uploadedFile) return;
+        $runAnalysisBtn.prop("disabled", true);
+        $buttonText.text("Processing...");
+        $loader.removeClass("hidden");
 
         const formData = new FormData();
         formData.append("file", uploadedFile);
+        formData.append("model", $modelSelector.val());
+        formData.append("threshold", $thresholdSlider.val());
 
         $.ajax({
-            url: "/run_analysis",
-            type: "POST",
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (result) {
-                console.log("Server response:", result);
+            url: "/run_analysis", type: "POST", data: formData,
+            processData: false, contentType: false,
+            success: (result) => {
+                analysisData = result;
+                $welcomeMessage.hide();
+                $resultsContainer.removeClass('hidden').addClass('fade-in-up');
                 renderSummaryCards(result.summary);
-                renderChart(result.results.clustered, result.results.anomalies);
+                $chartTabs.find(".chart-tab").removeClass('active-tab');
+                $chartTabs.find("[data-chart='cluster']").addClass('active-tab');
+                renderClusterChart();
             },
-            error: function (xhr) {
-                const errorMsg = xhr.responseJSON ? xhr.responseJSON.error : "An unknown server error occurred.";
-                console.error("Server error:", errorMsg);
-                alert("Server error: " + errorMsg);
+            error: (xhr) => {
+                alert("Error: " + (xhr.responseJSON?.error || "An unknown server error occurred."));
             },
-            complete: function () {
-                resetRunButton();
+            complete: () => {
+                $runAnalysisBtn.prop("disabled", false);
+                $buttonText.text("Run Analysis");
+                $loader.addClass("hidden");
             },
         });
     });
+
+    $chartTabs.on("click", ".chart-tab", function() {
+        if (!analysisData.results) return;
+        const chartType = $(this).data("chart");
+        $chartTabs.find('.chart-tab').removeClass('active-tab');
+        $(this).addClass('active-tab');
+        if (chartType === "cluster") renderClusterChart();
+        else if (chartType === "distance") renderDistanceChart();
+        else if (chartType === "volume") renderVolumeChart();
+    });
+
+    // --- Initial State ---
+    $runAnalysisBtn.prop("disabled", true);
 });

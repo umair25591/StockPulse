@@ -1,33 +1,75 @@
 {% extends "dashboard/layout.html" %}
 
-{% block title %}Analytics{% endblock %}
+{% block title %}Advanced Analytics{% endblock %}
 
 {% block styles %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/analytics.css') }}">
 {% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-gray-900 text-white">
-  <div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-2">Stock Market Cluster & Anomaly Analysis</h1>
-    <p class="text-gray-400 mb-6">Upload a CSV file to visualize market behavior clusters and identify anomalies.</p>
-
-    <div class="flex items-center space-x-4 mb-4">
-        <input type="file" id="csv-file" accept=".csv" class="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"/>
-        <button id="run-analysis" class="bg-green-600 hover:bg-green-700 px-5 py-2.5 rounded-lg text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-          Run Analysis
-        </button>
+<div class="flex h-screen bg-gray-900 text-white font-sans">
+  
+  <aside class="w-80 flex-shrink-0 bg-gray-900/70 backdrop-blur-xl border-r border-gray-700/50 p-6 flex flex-col space-y-7">
+    <div>
+      <h2 class="text-xl font-bold mb-1">Analysis Controls</h2>
+      <p class="text-sm text-gray-400">Configure your analysis parameters.</p>
     </div>
     
-    <div class="mt-8 bg-gray-800 p-6 rounded-lg shadow-lg">
-      <div id="summary-cards" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-center">
+    <div class="space-y-2">
+      <label for="csv-file" class="block text-sm font-medium text-gray-300">1. Upload Data File</label>
+      <input type="file" id="csv-file" accept=".csv" class="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer"/>
+    </div>
+
+    <div class="space-y-2">
+      <label for="model-selector" class="block text-sm font-medium text-gray-300">2. Select Clustering Model</label>
+      <select id="model-selector" class="w-full bg-gray-800 border border-gray-600 rounded-lg p-2.5 text-white focus:ring-emerald-500 focus:border-emerald-500">
+        <option value="kmeans" selected>K-Means Clustering</option>
+        <option value="gmm">Gaussian Mixture (GMM)</option>
+      </select>
+    </div>
+
+    <div class="space-y-2">
+        <div class="flex justify-between items-center">
+            <label for="threshold-slider" class="text-sm font-medium text-gray-300">3. Anomaly Threshold</label>
+            <span id="threshold-value" class="text-emerald-400 font-mono text-sm bg-gray-800 px-2 py-1 rounded">3.0</span>
         </div>
-      <div class="w-full h-[500px]">
-          <canvas id="stock-chart"></canvas>
+        <input id="threshold-slider" type="range" min="1.0" max="5.0" value="3.0" step="0.1" class="slider w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+    </div>
+
+    <div class="pt-6 border-t border-gray-700/50 !mt-auto">
+      <button id="run-analysis" class="w-full bg-emerald-600 hover:bg-emerald-700 px-5 py-3 rounded-lg text-base font-bold disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 transition-all duration-300">
+        <span id="button-text">Run Analysis</span>
+        <div id="loader" class="loader w-5 h-5 border-2 border-gray-300 border-t-white hidden"></div>
+      </button>
+    </div>
+  </aside>
+
+  <main class="flex-1 p-8 overflow-y-auto">
+    <div id="welcome-message" class="flex flex-col items-center justify-center h-full text-center">
+        <h1 class="text-4xl font-bold animated-text">Advanced Stock Analysis</h1>
+        <p class="text-gray-400 mt-4 max-w-lg">Upload your stock data, select a model, and set an anomaly threshold to begin visualizing market behavior.</p>
+    </div>
+
+    <div id="results-container" class="hidden">
+      <h1 class="text-3xl font-bold mb-6">Analysis Results</h1>
+      <div id="summary-cards" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        </div>
+
+      <div class="bg-gray-800/50 p-6 rounded-lg shadow-lg glass-effect">
+        <div class="border-b border-gray-700 mb-4">
+          <nav id="chart-tabs" class="flex space-x-2 sm:space-x-4" aria-label="Tabs">
+            <button data-chart="cluster" class="chart-tab active-tab">Cluster View</button>
+            <button data-chart="distance" class="chart-tab">Anomaly Distance</button>
+            <button data-chart="volume" class="chart-tab">Volume Analysis</button>
+          </nav>
+        </div>
+        
+        <div class="h-[60vh]">
+            <canvas id="stock-chart"></canvas>
+        </div>
       </div>
     </div>
-    
-  </div>
+  </main>
 </div>
 {% endblock %}
 
@@ -36,5 +78,9 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom/dist/chartjs-plugin-zoom.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial/dist/chartjs-chart-financial.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation/dist/chartjs-plugin-annotation.min.js"></script>
+
 <script src="{{ url_for('static', filename='js/analytics.js') }}"></script>
 {% endblock %}
