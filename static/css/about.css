@@ -1,94 +1,32 @@
-/* Base styles */
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: #000000;
-    color: #E0E0E0;
-    position: relative;
-    /* Needed for pseudo-elements */
+.team-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    text-align: center;
+    border-radius: 8px;
+    transition: all 0.3s ease;
 }
 
-/* --- NEW: Decorative Background Blobs --- */
-body::before,
-body::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 700px;
-    height: 700px;
-    z-index: -1;
-    opacity: 0.15;
-    filter: blur(100px);
-    will-change: transform;
+.team-card:hover {
+    transform: translateY(-10px);
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
-body::before {
-    background: radial-gradient(circle, #22c55e, transparent 60%);
-    transform: translate(-80%, -20%);
+.team-card img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    border: 4px solid var(--green);
+    /* Using green from your theme */
 }
 
-body::after {
-    background: radial-gradient(circle, #14b8a6, transparent 60%);
-    transform: translate(20%, -80%);
-    animation: moveBlob 20s infinite alternate;
+.team-card h3 {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 5px;
 }
 
-@keyframes moveBlob {
-    from {
-        transform: translate(20%, -80%) rotate(0deg);
-    }
-
-    to {
-        transform: translate(0%, -60%) rotate(180deg);
-    }
-}
-
-/* Gradient Text */
-.text-gradient {
-    background: linear-gradient(to right, #22c55e, #14b8a6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-/* Glow Effect on Hover for Buttons */
-.glow-button:hover {
-    box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
-}
-
-/* Animated Border Styles */
-@property --angle {
-    syntax: '<angle>';
-    initial-value: 0deg;
-    inherits: false;
-}
-
-@keyframes rotate {
-    to {
-        --angle: 360deg;
-    }
-}
-
-.animated-border-card {
-    --angle: 0deg;
-    position: relative;
-    border: 2px solid transparent;
-    background-clip: padding-box;
-    background-image: conic-gradient(from var(--angle), transparent 30%, #14b8a6, #22c55e, transparent 70%);
-    animation: rotate 4s linear infinite;
-}
-
-.animated-border-card:hover {
-    animation-duration: 2s;
-    box-shadow: 0 0 25px rgba(34, 197, 94, 0.4);
-}
-
-/* --- NEW: Glass Effect for Card Content --- */
-.glass-card-content {
-    background: rgba(10, 10, 10, 0.5);
-    /* Semi-transparent background */
-    -webkit-backdrop-filter: blur(12px);
-    /* Frosted glass effect */
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    /* Subtle edge highlight */
+.team-card p {
+    color: var(--green);
+    font-weight: 500;
 }

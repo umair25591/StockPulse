@@ -1,18 +1,22 @@
-<header class="h-16 bg-black border-b border-zinc-800 flex items-center justify-between px-6 flex-shrink-0">
-    <div>
-        <h2 class="text-lg font-semibold text-white">Dashboard Overview</h2>
-        <p class="text-sm text-zinc-500">Welcome back, Admin!</p>
+<header class="h-16 flex items-center justify-between px-6 flex-shrink-0 mt-2 mx-4 ml-0 glass-effect">
+    <div>        
+        {% if session.first_name %}
+            <h2 class="text-lg font-semibold text-white">Welcome back, {{ session.first_name }}!</h2>
+        {% else %}
+            <h2 class="text-lg font-semibold text-white">Welcome back!</h2>
+        {% endif %}
     </div>
     <div class="flex items-center space-x-4">
-        <div class="relative">
-            <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 w-5 h-5"></i>
-            <input type="text" placeholder="Search..." class="bg-zinc-900 border border-zinc-700 rounded-lg py-2 pl-10 pr-4 w-64 focus:outline-none focus:ring-2 focus:ring-green-500">
-        </div>
         <button class="p-2 rounded-full hover:bg-zinc-800">
             <i data-lucide="bell"></i>
         </button>
+
         <a href="{{ url_for('profile') }}">
-            <img src="https://placehold.co/40x40/22c55e/000000?text=A" alt="Admin" class="w-10 h-10 rounded-full">
+            {% if session.profile_picture %}
+                <img src="{{ url_for('static', filename='uploads/profiles/' + session.profile_picture) }}" alt="{{ session.first_name }}'s Profile Picture" class="w-10 h-10 rounded-full object-cover">
+            {% else %}
+                <img src="https://placehold.co/40x40/22c55e/ffffff?text={{ session.first_name[0] | upper if session.first_name else 'A' }}" alt="Admin" class="w-10 h-10 rounded-full">
+            {% endif %}
         </a>
     </div>
 </header>

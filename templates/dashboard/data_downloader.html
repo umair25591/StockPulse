@@ -1,0 +1,63 @@
+{% extends "dashboard/layout.html" %}
+
+{% block title %}Data Downloader{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 h-full">
+
+    <div class="glass-effect p-6 flex flex-col">
+        <div class="mb-6">
+            <h2 class="text-xl font-bold text-white">Download Stock Data</h2>
+            <p class="text-sm text-zinc-400">Fetch historical stock data directly from Yahoo Finance.</p>
+        </div>
+
+        <form action="{{ url_for('download_yfinance') }}" method="POST" class="space-y-6 flex flex-col flex-grow">
+            <div>
+                <label for="ticker" class="block text-sm font-semibold text-zinc-300 mb-2">Stock Ticker</label>
+                <input type="text" name="ticker" id="ticker" placeholder="e.g., AAPL, GOOGL, TSLA" required
+                       class="w-full bg-black/20 border border-zinc-700 text-zinc-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="start_date" class="block text-sm font-semibold text-zinc-300 mb-2">Start Date</label>
+                    <input type="date" name="start_date" id="start_date" required
+                           class="w-full bg-black/20 border border-zinc-700 text-zinc-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+                <div>
+                    <label for="end_date" class="block text-sm font-semibold text-zinc-300 mb-2">End Date</label>
+                    <input type="date" name="end_date" id="end_date" required
+                           class="w-full bg-black/20 border border-zinc-700 text-zinc-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-white/10 mt-auto">
+                <button type="submit" class="w-full py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-green-600 to-green-700
+                                           shadow-lg shadow-green-600/30 hover:scale-[1.02] transition flex items-center justify-center 
+                                           gap-3">
+                    <i data-lucide="download-cloud" class="w-5 h-5"></i>
+                    Download Data
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="glass-effect rounded-lg bg-cover bg-center p-6 flex flex-col" 
+         style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=2070');">
+        <div>
+            <h3 class="text-2xl font-bold text-white">How it Works</h3>
+            <p class="text-zinc-300 mt-2">This tool fetches data that is perfectly formatted for use in our Analytics engine.</p>
+        </div>
+        <div class="mt-6">
+            <h4 class="font-semibold text-white mb-2">Tips:</h4>
+            <ul class="list-disc list-inside text-sm text-zinc-400 space-y-2">
+                <li>Use uppercase ticker symbols (e.g., <code class="bg-black/30 px-1 rounded">MSFT</code>).</li>
+                <li>Select a date range of at least one year for best results.</li>
+                <li>The downloaded CSV will have the required two-line header.</li>
+                <li>You can take the downloaded file directly to the "Analytics" page.</li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

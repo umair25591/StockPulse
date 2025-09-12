@@ -15,22 +15,7 @@
 
     <spline-viewer id="spline-background" url="https://prod.spline.design/BuD8cTwsezQIv0R0/scene.splinecode"></spline-viewer>
 
-    <header class="main-header">
-        <div class="container">
-            <a href="{{ url_for('home') }}" class="logo">GLINT</a>
-            <nav class="main-nav">
-                <a href="{{ url_for('home') }}" class="active">HOME</a>
-                <a href="{{ url_for('about') }}">ABOUT</a>
-                <a href="#">SERVICE</a>
-                <a href="#">PORTFOLIO</a>
-                <a href="#">PAGES</a>
-            </nav>
-            <div class="header-right">
-                <i class="fas fa-search search-icon"></i>
-                <a href="#" class="contact-btn"><i class="fas fa-phone"></i> Contacts</a>
-            </div>
-        </div>
-    </header>
+    {% include "partials/landing-header.html" %}
 
     <main>
         <section class="hero">
@@ -43,7 +28,7 @@
                     <a href="#" class="btn animate-on-scroll">GETTING STARTED</a>
                 </div>
                 <div class="hero-image animate-on-scroll">
-                     <spline-viewer url="https://prod.spline.design/uDXFxBsbRoDyj8UI/scene.splinecode"></spline-viewer>
+                     <!-- <spline-viewer url="https://prod.spline.design/uDXFxBsbRoDyj8UI/scene.splinecode"></spline-viewer> -->
                 </div>
             </div>
         </section>

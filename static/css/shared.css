@@ -1,0 +1,39 @@
+.glass-effect {
+    background: rgba(40, 40, 40, 0.65) !important;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Custom scrollbar for the new theme */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #18181b;
+    /* zinc-900 */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3f3f46;
+    /* zinc-700 */
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #52525b;
+    /* zinc-600 */
+}
+
+/* Applying the Inter font family */
+body {
+    font-family: 'Inter', sans-serif;
+    /* Added background image for the glass effect to be visible */
+    background-image: url('https://images.unsplash.com/photo-1544198365-f5d60b6d8190?q=80&w=2070&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}

@@ -2,85 +2,236 @@
 
 {% block title %}Advanced Analytics{% endblock %}
 
-{% block styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/analytics.css') }}">
+{% block style %}
+<style>
+  .chart-tab {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #a1a1aa;
+    background-color: transparent;
+    transition: all 0.2s ease-in-out;
+    border: 1px solid transparent;
+  }
+
+  .chart-tab:hover {
+    color: #e4e4e7;
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .chart-tab.active-tab {
+    color: #ffffff;
+    font-weight: 600;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  /* Add this to your style block */
+  .shimmer-bg {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .shimmer-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+    animation: shimmer 1.8s infinite;
+  }
+
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  /* Add these styles for the preview table */
+  #csv-preview-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: rgba(39, 39, 42, 0.8);
+    /* zinc-800 with opacity */
+    backdrop-filter: blur(4px);
+    color: #e4e4e7;
+    /* text-zinc-200 */
+    font-weight: 600;
+    text-align: left;
+    padding: 12px 16px;
+  }
+
+  #csv-preview-table tbody td {
+    padding: 10px 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #d4d4d8;
+    /* text-zinc-300 */
+    font-size: 0.875rem;
+    white-space: nowrap;
+  }
+
+  #csv-preview-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+</style>
 {% endblock %}
 
 {% block content %}
-<div class="flex h-screen bg-gray-900 text-white font-sans">
-  
-  <aside class="w-80 flex-shrink-0 bg-gray-900/70 backdrop-blur-xl border-r border-gray-700/50 p-6 flex flex-col space-y-7">
-    <div>
-      <h2 class="text-xl font-bold mb-1">Analysis Controls</h2>
-      <p class="text-sm text-gray-400">Configure your analysis parameters.</p>
-    </div>
-    
-    <div class="space-y-2">
-      <label for="csv-file" class="block text-sm font-medium text-gray-300">1. Upload Data File</label>
-      <input type="file" id="csv-file" accept=".csv" class="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer"/>
-    </div>
+<div class="flex flex-col lg:flex-row gap-2 h-full">
 
-    <div class="space-y-2">
-      <label for="model-selector" class="block text-sm font-medium text-gray-300">2. Select Clustering Model</label>
-      <select id="model-selector" class="w-full bg-gray-800 border border-gray-600 rounded-lg p-2.5 text-white focus:ring-emerald-500 focus:border-emerald-500">
-        <option value="kmeans" selected>K-Means Clustering</option>
-        <option value="gmm">Gaussian Mixture (GMM)</option>
-      </select>
-    </div>
+  <aside class="lg:w-96 flex-shrink-0 flex flex-col gap-6">
+    <div class="glass-effect p-6 flex-grow flex flex-col">
+      <div>
+        <h2 class="text-xl font-bold mb-1 text-white">Analysis Controls</h2>
+        <p class="text-sm text-zinc-400">Configure your analysis parameters.</p>
+      </div>
 
-    <div class="space-y-2">
-        <div class="flex justify-between items-center">
-            <label for="threshold-slider" class="text-sm font-medium text-gray-300">3. Anomaly Threshold</label>
-            <span id="threshold-value" class="text-emerald-400 font-mono text-sm bg-gray-800 px-2 py-1 rounded">3.0</span>
+      <div class="flex-grow flex flex-col gap-5 mt-6">
+        <div>
+          <label for="csv-file" class="block text-sm font-semibold text-zinc-300 mb-2">1. Upload Data File</label>
+          <input type="file" id="csv-file" accept=".csv" class="w-full text-sm text-zinc-300 bg-black/20 border border-zinc-700 rounded-lg cursor-pointer
+                                  file:bg-green-600 file:hover:bg-green-500 file:border-none file:text-white file:font-semibold 
+                                  file:px-4 file:py-2 file:mr-4 file:cursor-pointer" />
         </div>
-        <input id="threshold-slider" type="range" min="1.0" max="5.0" value="3.0" step="0.1" class="slider w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
-    </div>
 
-    <div class="pt-6 border-t border-gray-700/50 !mt-auto">
-      <button id="run-analysis" class="w-full bg-emerald-600 hover:bg-emerald-700 px-5 py-3 rounded-lg text-base font-bold disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 transition-all duration-300">
-        <span id="button-text">Run Analysis</span>
-        <div id="loader" class="loader w-5 h-5 border-2 border-gray-300 border-t-white hidden"></div>
-      </button>
+        <div>
+            <label for="stock-ticker" class="block text-sm font-semibold text-zinc-300 mb-2">2. Enter Stock Ticker</label>
+            <input type="text" id="stock-ticker" placeholder="e.g., AAPL, GOOGL"
+                  class="w-full bg-black/20 border border-zinc-700 text-zinc-300 text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+        </div>
+
+        <div>
+          <label for="model-selector" class="block text-sm font-semibold text-zinc-300 mb-2">2. Select Clustering
+            Model</label>
+          <select id="model-selector" class="w-full bg-black/20 border border-zinc-700 text-zinc-300 text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+            <option value="kmeans" selected>K-Means Clustering</option>
+            <option value="gmm">Gaussian Mixture (GMM)</option>
+            <option value="isolation_forest">Isolation Forest</option>
+            <option value="svm">SVM</option>
+          </select>
+        </div>
+
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <label for="threshold-slider" class="text-sm font-semibold text-zinc-300">3. Anomaly Threshold</label>
+            <span id="threshold-value" class="text-green-400 font-mono text-sm bg-black/20 px-2 py-1 rounded">3.0</span>
+          </div>
+          <input id="threshold-slider" type="range" min="1.0" max="5.0" value="3.0" step="0.1"
+            class="w-full h-2 bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-green-500">
+        </div>
+      </div>
+
+      <div class="pt-6 border-t border-white/10 mt-6">
+        <button id="run-analysis" class="w-full py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-green-600 to-green-700
+                               shadow-lg shadow-green-600/30 hover:scale-[1.02] transition flex items-center justify-center 
+                               gap-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100">
+          <i data-lucide="play-circle" class="w-5 h-5"></i>
+          <span id="button-text">Run Analysis</span>
+          <span id="loader"
+            class="hidden absolute rounded-full border-2 border-white/30 border-t-white w-5 h-5 animate-spin"></span>
+        </button>
+      </div>
     </div>
   </aside>
 
-  <main class="flex-1 p-8 overflow-y-auto">
-    <div id="welcome-message" class="flex flex-col items-center justify-center h-full text-center">
-        <h1 class="text-4xl font-bold animated-text">Advanced Stock Analysis</h1>
-        <p class="text-gray-400 mt-4 max-w-lg">Upload your stock data, select a model, and set an anomaly threshold to begin visualizing market behavior.</p>
+  <main class="flex-1 flex flex-col">
+    <div id="welcome-message" class="glass-effect flex-grow flex flex-col items-center justify-center text-center p-6">
+      <h1 class="text-4xl font-bold bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">Stock Analysis</h1>
+      <p class="text-zinc-400 mt-4 max-w-lg">Upload your stock data, select a model, and set an anomaly threshold to begin visualizing market behavior.</p>
     </div>
 
-    <div id="results-container" class="hidden">
-      <h1 class="text-3xl font-bold mb-6">Analysis Results</h1>
-      <div id="summary-cards" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div id="analysis-loader" class="hidden h-full flex flex-col gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="glass-effect p-6 shimmer-bg">
+          <div class="h-4 w-3/4 bg-zinc-700/50 rounded"></div>
+          <div class="h-8 w-1/2 bg-zinc-700/50 rounded mt-3"></div>
         </div>
+        <div class="glass-effect p-6 shimmer-bg">
+          <div class="h-4 w-3/4 bg-zinc-700/50 rounded"></div>
+          <div class="h-8 w-1/2 bg-zinc-700/50 rounded mt-3"></div>
+        </div>
+        <div class="glass-effect p-6 shimmer-bg">
+          <div class="h-4 w-3/4 bg-zinc-700/50 rounded"></div>
+          <div class="h-8 w-1/2 bg-zinc-700/50 rounded mt-3"></div>
+        </div>
+      </div>
+      <div class="glass-effect p-4 flex-grow flex flex-col shimmer-bg">
+        <div class="flex space-x-4 mb-4">
+          <div class="bg-zinc-700/50 h-8 w-24 rounded-lg"></div>
+          <div class="bg-zinc-700/50 h-8 w-32 rounded-lg"></div>
+          <div class="bg-zinc-700/50 h-8 w-28 rounded-lg"></div>
+        </div>
+        <div class="bg-zinc-700/50 rounded-lg flex-grow"></div>
+      </div>
+    </div>
 
-      <div class="bg-gray-800/50 p-6 rounded-lg shadow-lg glass-effect">
-        <div class="border-b border-gray-700 mb-4">
+    <div id="csv-preview-container" class="hidden h-full flex flex-col gap-4 glass-effect p-6">
+      <h2 class="text-xl font-bold text-white">Data Preview</h2>
+      <p class="text-sm text-zinc-400 -mt-2 mb-2">Showing the first 50 rows of your uploaded file. Click "Run Analysis"
+        to continue.</p>
+      <div class="flex-grow overflow-auto border border-zinc-700/50 rounded-lg">
+        <table id="csv-preview-table" class="min-w-full">
+        </table>
+      </div>
+    </div>
+
+    <div id="results-container" class="hidden h-full flex flex-col gap-2">
+
+      <div class="glass-effect flex items-baseline p-4 rounded-lg">
+          <h2 class="text-2xl font-bold text-white">Analysis Results for:</h2>
+          <span id="stock-symbol-display" class="ml-3 text-2xl font-bold text-green-400"></span>
+      </div>
+
+      <div id="summary-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      </div>
+
+      <div class="glass-effect p-4 flex-grow flex flex-col">
+        <div class="flex justify-between items-center mb-4">
           <nav id="chart-tabs" class="flex space-x-2 sm:space-x-4" aria-label="Tabs">
             <button data-chart="cluster" class="chart-tab active-tab">Cluster View</button>
             <button data-chart="distance" class="chart-tab">Anomaly Distance</button>
             <button data-chart="volume" class="chart-tab">Volume Analysis</button>
+            <button data-chart="distribution" class="chart-tab">Anomaly Distribution</button>
+            <button data-chart="features" class="chart-tab">Feature Comparison</button>
           </nav>
+
+          <div class="flex items-center gap-4">
+              <button id="download-csv" class="hidden px-4 py-2 text-sm font-semibold text-white bg-zinc-800/70
+                  hover:bg-zinc-700/90 rounded-lg flex items-center gap-2">
+                  <i data-lucide="download-cloud" class="w-4 h-4"></i>
+                  Download CSV
+              </button>
+
+              <button id="download-chart" class="hidden px-4 py-2 text-sm font-semibold text-white bg-zinc-800/70
+                  hover:bg-zinc-700/90 rounded-lg flex items-center gap-2">
+                  <i data-lucide="image" class="w-4 h-4"></i>
+                  Download Chart
+              </button>
+          </div>
+
         </div>
-        
-        <div class="h-[60vh]">
-            <canvas id="stock-chart"></canvas>
+
+        <div class="flex-grow h-[60vh] lg:h-auto">
+          <canvas id="stock-chart"></canvas>
         </div>
       </div>
+
     </div>
   </main>
 </div>
 {% endblock %}
 
 {% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom/dist/chartjs-plugin-zoom.min.js"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial/dist/chartjs-chart-financial.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation/dist/chartjs-plugin-annotation.min.js"></script>
-
 <script src="{{ url_for('static', filename='js/analytics.js') }}"></script>
 {% endblock %}

@@ -3,174 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <script src="https://unpkg.com/lucide@latest"></script>
-
+    <title>About Us - Glint</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.57/build/spline-viewer.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
-
 </head>
-<body class="antialiased overflow-x-hidden">
+<body>
 
-    <header class="absolute top-0 left-0 w-full z-20 py-6 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <a href="{{ url_for('home') }}" class="text-2xl font-bold text-white tracking-wider">GLINT</a>
-            <nav class="hidden md:flex items-center space-x-8">
-                <a href="{{ url_for('home') }}" class="text-sm font-medium text-white hover:text-green-400 transition-colors">HOME</a>
-                <a href="{{ url_for('about') }}" class="text-sm font-medium text-green-400">ABOUT</a>
-                <a href="#" class="text-sm font-medium text-white hover:text-green-400 transition-colors">SERVICE</a>
-                <a href="#" class="text-sm font-medium text-white hover:text-green-400 transition-colors">PORTFOLIO</a>
-            </nav>
-            <a href="#" class="bg-green-500 text-black font-semibold text-sm px-5 py-2.5 rounded-md hover:opacity-90 transition-all duration-300 glow-button">
-                Contacts
-            </a>
-        </div>
-    </header>
+    <spline-viewer id="spline-background" url="https://prod.spline.design/BuD8cTwsezQIv0R0/scene.splinecode"></spline-viewer>
+
+    {% include "partials/landing-header.html" %}
 
     <main>
-        <section class="relative pt-40 pb-24 text-center">
-            <div class="max-w-4xl mx-auto px-4">
-                <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight" data-aos="fade-up">
-                    DRIVEN BY <span class="text-gradient">CURIOSITY</span>,
+        <section class="hero">
+            <div class="container" style="text-align: center;">
+                <h1 class="animate-on-scroll">
+                    DRIVEN BY <span class="text-green">CURIOSITY</span>,
                     <br>
-                    DEFINED BY <span class="text-gradient">RESULTS</span>.
+                    DEFINED BY <span class="text-green">RESULTS</span>.
                 </h1>
-                <p class="mt-6 max-w-2xl mx-auto text-lg text-zinc-300" data-aos="fade-up" data-aos-delay="200">
+                <p class="animate-on-scroll" style="max-width: 700px; margin: 20px auto 0;">
                     Glint was founded on a simple belief: that technology and human ingenuity can solve the most complex challenges. We are a team of strategists, creators, and innovators dedicated to pushing boundaries and delivering excellence.
                 </p>
             </div>
         </section>
 
-        <section class="py-24">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                 <div class="text-center mb-16" data-aos="fade-up">
-                    <h2 class="text-3xl font-bold text-white">Our Core <span class="text-gradient">Values</span></h2>
-                    <p class="mt-4 text-lg text-zinc-400">The principles that guide every decision we make.</p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="animated-border-card rounded-xl transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
-                        <div class="glass-card-content p-8 rounded-lg h-full text-center">
-                            <div class="flex items-center justify-center h-16 w-16 rounded-full bg-green-500/10 mx-auto mb-6">
-                                <i data-lucide="lightbulb" class="text-green-400 h-8 w-8"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-white">Innovation</h3>
-                            <p class="mt-2 text-zinc-400">We constantly seek better ways to solve problems, embracing creativity and experimentation.</p>
-                        </div>
+        <section class="services section-padding">
+            <div class="container">
+                <p class="section-title animate-on-scroll">OUR PRINCIPLES</p>
+                <h2 class="animate-on-scroll">Our Core <span class="text-green">Values</span></h2>
+                <p class="animate-on-scroll">The principles that guide every decision we make.</p>
+                
+                <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                    <div class="service-card animate-on-scroll">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3>Innovation</h3>
+                        <p>We constantly seek better ways to solve problems, embracing creativity and experimentation.</p>
                     </div>
-                    <div class="animated-border-card rounded-xl transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
-                        <div class="glass-card-content p-8 rounded-lg h-full text-center">
-                             <div class="flex items-center justify-center h-16 w-16 rounded-full bg-green-500/10 mx-auto mb-6">
-                                <i data-lucide="shield-check" class="text-green-400 h-8 w-8"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-white">Integrity</h3>
-                            <p class="mt-2 text-zinc-400">We operate with transparency and honesty, building trust through every interaction.</p>
-                        </div>
+                    <div class="service-card animate-on-scroll">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Integrity</h3>
+                        <p>We operate with transparency and honesty, building trust through every interaction.</p>
                     </div>
-                    <div class="animated-border-card rounded-xl transition-all duration-300" data-aos="fade-up" data-aos-delay="300">
-                         <div class="glass-card-content p-8 rounded-lg h-full text-center">
-                             <div class="flex items-center justify-center h-16 w-16 rounded-full bg-green-500/10 mx-auto mb-6">
-                                <i data-lucide="users" class="text-green-400 h-8 w-8"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-white">Collaboration</h3>
-                            <p class="mt-2 text-zinc-400">We believe the best results come from working together with our clients and each other.</p>
-                        </div>
+                    <div class="service-card animate-on-scroll">
+                        <i class="fas fa-users"></i>
+                        <h3>Collaboration</h3>
+                        <p>We believe the best results come from working together with our clients and each other.</p>
                     </div>
-                    <div class="animated-border-card rounded-xl transition-all duration-300" data-aos="fade-up" data-aos-delay="400">
-                         <div class="glass-card-content p-8 rounded-lg h-full text-center">
-                             <div class="flex items-center justify-center h-16 w-16 rounded-full bg-green-500/10 mx-auto mb-6">
-                                <i data-lucide="gem" class="text-green-400 h-8 w-8"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-white">Excellence</h3>
-                            <p class="mt-2 text-zinc-400">We set the highest standards for our work, striving for quality and impact in everything we do.</p>
-                        </div>
+                     <div class="service-card animate-on-scroll">
+                        <i class="far fa-gem"></i>
+                        <h3>Excellence</h3>
+                        <p>We set the highest standards for our work, striving for quality and impact in everything we do.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-
-        <section class="py-24 overflow-hidden">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-5 gap-12 items-center">
-                <div class="md:col-span-3" data-aos="fade-right">
-                    <h2 class="text-3xl font-bold text-white mb-4">From a Simple Idea <br> to a <span class="text-gradient">Market Leader</span></h2>
-                    <p class="text-zinc-300 mb-4 text-lg">
-                        From our beginnings, Glint has grown into a powerhouse for digital transformation and HR solutions. We saw a gap in the market for a firm that wasn't just a vendor, but a true partner in growth.
-                    </p>
-                    <p class="text-zinc-400">
-                        Our journey has been one of relentless learning and adaptation. We embrace failure as a stepping stone to success, allowing us to deliver robust, future-proof solutions that empower our clients to thrive in an ever-changing landscape.
-                    </p>
+        <section class="about section-padding">
+            <div class="container grid">
+                 <div class="about-text">
+                    <h2 class="animate-on-scroll">From a Simple Idea to a <span class="text-green">Market Leader</span></h2>
+                    <p class="animate-on-scroll">From our beginnings, Glint has grown into a powerhouse for digital transformation and HR solutions. We saw a gap in the market for a firm that wasn't just a vendor, but a true partner in growth.</p>
+                    <p class="animate-on-scroll">Our journey has been one of relentless learning and adaptation. We embrace failure as a stepping stone to success, allowing us to deliver robust, future-proof solutions that empower our clients to thrive in an ever-changing landscape.</p>
                 </div>
-                <div class="md:col-span-2" data-aos="fade-left">
-                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600" alt="Team collaborating" class="rounded-xl shadow-2xl shadow-green-500/20 transform md:rotate-3">
+                <div class="about-image animate-on-scroll">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600" alt="Team collaborating" style="max-width: 100%; border-radius: 8px;">
                 </div>
             </div>
         </section>
 
-        <section class="py-24">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16" data-aos="fade-up">
-                    <h2 class="text-3xl font-bold text-white">Meet The <span class="text-gradient">Leadership</span></h2>
-                    <p class="mt-4 text-lg text-zinc-400">The brilliant minds guiding our mission forward.</p>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="animated-border-card rounded-xl transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
-                         <div class="glass-card-content p-8 rounded-lg text-center h-full">
-                            <img class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-zinc-700/50" src="https://placehold.co/200x200/FFFFFF/000000?text=JD" alt="Jane Doe, CEO">
-                            <h3 class="text-xl font-bold text-white">Jane Doe</h3>
-                            <p class="text-green-400 font-semibold">Founder & CEO</p>
-                        </div>
+        <section class="experience section-padding">
+            <div class="container">
+                <p class="section-title animate-on-scroll">OUR TEAM</p>
+                <h2 class="animate-on-scroll">Meet The <span class="text-green">Leadership</span></h2>
+                <p class="animate-on-scroll">The brilliant minds guiding our mission forward.</p>
+                
+                <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+                    <div class="team-card animate-on-scroll">
+                        <img src="https://placehold.co/200x200/FFFFFF/111111?text=JD" alt="Jane Doe, CEO">
+                        <h3>Jane Doe</h3>
+                        <p>Founder & CEO</p>
                     </div>
-                    <div class="animated-border-card rounded-xl transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
-                         <div class="glass-card-content p-8 rounded-lg text-center h-full">
-                            <img class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-zinc-700/50" src="https://placehold.co/200x200/FFFFFF/000000?text=JS" alt="John Smith, CTO">
-                            <h3 class="text-xl font-bold text-white">John Smith</h3>
-                            <p class="text-green-400 font-semibold">Chief Technology Officer</p>
-                        </div>
+                    <div class="team-card animate-on-scroll">
+                        <img src="https://placehold.co/200x200/FFFFFF/111111?text=JS" alt="John Smith, CTO">
+                        <h3>John Smith</h3>
+                        <p>Chief Technology Officer</p>
                     </div>
-                    <div class="animated-border-card rounded-xl transition-all duration-300" data-aos="fade-up" data-aos-delay="300">
-                        <div class="glass-card-content p-8 rounded-lg text-center h-full">
-                            <img class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-zinc-700/50" src="https://placehold.co/200x200/FFFFFF/000000?text=EW" alt="Emily Wang, Head of Design">
-                            <h3 class="text-xl font-bold text-white">Emily Wang</h3>
-                            <p class="text-green-400 font-semibold">Head of Design</p>
-                        </div>
+                    <div class="team-card animate-on-scroll">
+                        <img src="https://placehold.co/200x200/FFFFFF/111111?text=EW" alt="Emily Wang, Head of Design">
+                        <h3>Emily Wang</h3>
+                        <p>Head of Design</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="py-24">
-            <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
-                 <h2 class="text-3xl font-bold text-white">Ready to build the future with us?</h2>
-                 <p class="mt-4 text-lg text-zinc-300">Let's connect and discuss how our imagination can fuel your success.</p>
-                 <a href="#" class="mt-8 inline-block text-green-400 font-semibold border-2 border-green-500 rounded-md px-8 py-3 hover:bg-green-500 hover:text-black transition-all duration-300 glow-button">
-                    Get In Touch
-                </a>
+        <section class="newsletter section-padding">
+            <div class="container">
+                <h2 class="animate-on-scroll">Ready to build the future with us?</h2>
+                <p class="animate-on-scroll" style="margin-top: 1rem; margin-bottom: 2rem;">Let's connect and discuss how our imagination can fuel your success.</p>
+                <a href="#" class="btn animate-on-scroll">Get In Touch</a>
             </div>
         </section>
 
     </main>
 
-    <footer class="bg-black/50 border-t border-zinc-800">
-        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 text-center">
-            <a href="#" class="text-2xl font-bold text-white">GLINT</a>
-            <p class="mt-4 text-zinc-400">Innovating for a better tomorrow.</p>
-            <div class="mt-8 flex justify-center space-x-6">
-                <a href="#" class="text-zinc-400 hover:text-white"><i data-lucide="twitter"></i></a>
-                <a href="#" class="text-zinc-400 hover:text-white"><i data-lucide="linkedin"></i></a>
-                <a href="#" class="text-zinc-400 hover:text-white"><i data-lucide="github"></i></a>
+    <footer class="main-footer">
+        <div class="container">
+            <div class="sponsors">
+                <img src="https://i.imgur.com/uR1Y61R.png" alt="Melrose">
+                <img src="https://i.imgur.com/Y1Z54oH.png" alt="Market Trade">
+                <img src="https://i.imgur.com/4g0b73Q.png" alt="Block Woody">
+                <img src="https://i.imgur.com/vHqjA9U.png" alt="Market Runner">
             </div>
-            <p class="mt-8 text-sm text-zinc-500">&copy; 2025 Glint Inc. All rights reserved.</p>
+            <div class="footer-bottom">
+                <a href="#">ABOUT ME</a>
+                <a href="#">CAREER</a>
+                <a href="#">BLOG</a>
+                <a href="#">GALLERY</a>
+                <a href="#">CONTACT ME</a>
+            </div>
         </div>
     </footer>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="{{ url_for('static', filename='js/about.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 
 </body>
 </html>

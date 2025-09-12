@@ -7,10 +7,33 @@
 }
 
 body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     min-height: 100vh;
-    background: #000000;
-    /* Black background from theme */
     overflow: hidden;
+    background-color: #1a1a1a;
+    /* Fallback background */
+}
+
+/* Spline viewer for the 3D background */
+spline-viewer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    /* Place it behind all other content */
+}
+
+.glass-effect {
+    background: rgba(40, 40, 40, 0.65) !important;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .container {
@@ -38,7 +61,7 @@ body {
 
 .login-box {
     width: 380px;
-    height: 480px;
+    height: 100%;
 }
 
 .login-box.active-slide .form-wrapper {

@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modern Green & Black Login</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login-signup.css') }}">
 </head>
+
 <body>
+
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.57/build/spline-viewer.js"></script>
+
+
+    <!-- <spline-viewer url="https://prod.spline.design/0OLxvVg2LzEMszlG/scene.splinecode"></spline-viewer> -->
+
     <div class="container">
-        <div class="info-side">
+        <div class="info-side ">
             <div class="info-box">
                 <div class="content-container info-container">
                     <h1>Welcome To <span>Our Community</span></h1>
@@ -19,19 +28,20 @@
                 </div>
             </div>
         </div>
-        <div class="form-side">
-            <div class="animated-box login-box">
-                <div class="content-container form-container">
+        <div class="form-side ">
+            <div class="animated-box login-box glass-effect">
+                <div class="content-container form-container ">
                     <div class="form-wrapper">
-                        <form id="login-form">
+
+                        <form id="login-form" method="POST" action="{{ url_for('login') }}">
                             <h2>User <span>Login</span></h2>
                             <div class="input-box">
-                                <input type="text" required="required">
-                                <label>Username or Email</label>
+                                <input type="email" name="email" required="required">
+                                <label>Email Address</label>
                                 <i></i>
                             </div>
                             <div class="input-box">
-                                <input type="password" required="required">
+                                <input type="password" name="password" required="required">
                                 <label>Password</label>
                                 <i></i>
                             </div>
@@ -39,30 +49,55 @@
                                 <a href="#">Forgot Password?</a>
                                 <a href="#" id="show-signup">Sign Up</a>
                             </div>
-                            <a href="{{ url_for('dashboard') }}" class="submit-btn" style="text-align: center; text-decoration: none; padding: 11px 25px;">LOGIN</a>
+                            <button type="submit" class="submit-btn">LOGIN</button>
                         </form>
-                        <form id="signup-form">
+
+                        <form id="signup-form" method="POST" action="{{ url_for('signup') }}"
+                            enctype="multipart/form-data">
                             <h2>Create <span>Account</span></h2>
+
                             <div class="input-box">
-                                <input type="text" required="required">
-                                <label>Username</label>
+                                <input type="text" name="first_name" required="required">
+                                <label>First Name</label>
                                 <i></i>
                             </div>
                             <div class="input-box">
-                                <input type="email" required="required">
-                                <label>Email</label>
+                                <input type="text" name="last_name" required="required">
+                                <label>Last Name</label>
                                 <i></i>
                             </div>
                             <div class="input-box">
-                                <input type="password" required="required">
+                                <input type="email" name="email" required="required">
+                                <label>Email Address</label>
+                                <i></i>
+                            </div>
+                            <div class="input-box">
+                                <input type="password" name="password" required="required">
                                 <label>Password</label>
                                 <i></i>
                             </div>
+                            <div class="input-box">
+                                <input type="text" name="role" required="required">
+                                <label>Role (e.g., Developer, Analyst)</label>
+                                <i></i>
+                            </div>
+                            <div class="input-box">
+                                <input type="text" name="address" required="required">
+                                <label>Home Address</label>
+                                <i></i>
+                            </div>
+                            <div class="input-box">
+                                <input type="file" name="profile_picture" accept="image/*" required="required">
+                                <label style="top: -20px;">Profile Picture</label>
+                                <i></i>
+                            </div>
+
                             <div class="links">
                                 <a href="#" id="show-login">Back to Login</a>
                             </div>
                             <button type="submit" class="submit-btn">SIGN UP</button>
                         </form>
+
                     </div>
                 </div>
             </div>
@@ -72,4 +107,5 @@
     <script src="{{ url_for('static', filename='js/login-signup.js') }}"></script>
 
 </body>
+
 </html>

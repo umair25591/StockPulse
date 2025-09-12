@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glint - Our Blog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.57/build/spline-viewer.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+<style>
+    /* ===================================================================
+ * # Blog Page Styles
+ *
+ * ------------------------------------------------------------------- */
+
+.page-header {
+    padding-top: 150px;
+    padding-bottom: 80px;
+    text-align: center;
+}
+
+.page-header h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.blog-posts .grid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+}
+
+.blog-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.blog-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+}
+
+.blog-card-content {
+    padding: 1.5rem;
+}
+
+.blog-meta {
+    font-size: 0.8rem;
+    color: #a0a0a0;
+    margin-bottom: 1rem;
+}
+
+.blog-meta span {
+    margin-right: 1rem;
+}
+
+.blog-meta i {
+    color: #2eef7b; /* Your theme's green color */
+    margin-right: 0.5rem;
+}
+
+.blog-card-content h3 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.blog-card-content h3 a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.blog-card-content h3 a:hover {
+    color: #2eef7b; /* Your theme's green color */
+}
+
+.blog-card-content p {
+    color: #ccc;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.read-more-link {
+    color: #2eef7b; /* Your theme's green color */
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.read-more-link:hover {
+    text-decoration: underline;
+}
+
+/* --- Pagination --- */
+.pagination {
+    margin-top: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.page-link {
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.6rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.page-link:hover,
+.page-link.active {
+    background-color: #2eef7b; /* Your theme's green color */
+    color: #111;
+    border-color: #2eef7b;
+}
+</style>
+<body>
+
+    <spline-viewer id="spline-background" url="https://prod.spline.design/BuD8cTwsezQIv0R0/scene.splinecode"></spline-viewer>
+
+    {% include "partials/landing-header.html" %}
+
+    <main>
+        <section class="page-header section-padding">
+            <div class="container" style="text-align: center;">
+                <h1 class="animate-on-scroll">OUR <span class="text-green">LATEST NEWS</span></h1>
+                <p class="animate-on-scroll">Stay updated with our articles, thoughts, and insights on design and technology.</p>
+            </div>
+        </section>
+
+        <section class="blog-posts section-padding">
+            <div class="container">
+                <div class="grid">
+                    
+                    <article class="blog-card animate-on-scroll">
+                        <a href="#"><img src="https://picsum.photos/id/1015/600/400" alt="A river flowing through a canyon"></a>
+                        <div class="blog-card-content">
+                            <div class="blog-meta">
+                                <span><i class="fas fa-calendar-alt"></i> Sep 10, 2025</span>
+                                <span><i class="fas fa-folder-open"></i> UI/UX Design</span>
+                            </div>
+                            <h3><a href="#">10 Essential Tips for a User-Friendly Interface</a></h3>
+                            <p>Discover the key principles that will elevate your UI/UX design, ensuring a seamless and enjoyable experience for your users...</p>
+                            <a href="#" class="read-more-link">READ MORE</a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card animate-on-scroll">
+                        <a href="#"><img src="https://picsum.photos/id/103/600/400" alt="Vintage cameras on a wooden surface"></a>
+                        <div class="blog-card-content">
+                            <div class="blog-meta">
+                                <span><i class="fas fa-calendar-alt"></i> Sep 05, 2025</span>
+                                <span><i class="fas fa-folder-open"></i> Branding</span>
+                            </div>
+                            <h3><a href="#">The Power of Storytelling in Brand Identity</a></h3>
+                            <p>Learn how to craft a compelling brand narrative that resonates with your audience and builds lasting loyalty...</p>
+                            <a href="#" class="read-more-link">READ MORE</a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card animate-on-scroll">
+                        <a href="#"><img src="https://picsum.photos/id/24/600/400" alt="A book with a cup of coffee"></a>
+                        <div class="blog-card-content">
+                            <div class="blog-meta">
+                                <span><i class="fas fa-calendar-alt"></i> Aug 28, 2025</span>
+                                <span><i class="fas fa-folder-open"></i> Web Development</span>
+                            </div>
+                            <h3><a href="#">Frontend Frameworks: Which One to Choose in 2025?</a></h3>
+                            <p>A comprehensive comparison of the top frontend frameworks to help you decide which is the best fit for your next project...</p>
+                            <a href="#" class="read-more-link">READ MORE</a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card animate-on-scroll">
+                        <a href="#"><img src="https://picsum.photos/id/431/600/400" alt="A person working on a laptop"></a>
+                        <div class="blog-card-content">
+                            <div class="blog-meta">
+                                <span><i class="fas fa-calendar-alt"></i> Aug 20, 2025</span>
+                                <span><i class="fas fa-folder-open"></i> SEO</span>
+                            </div>
+                            <h3><a href="#">Mastering SEO: A Beginner's Guide to Ranking Higher</a></h3>
+                            <p>Unpack the fundamentals of Search Engine Optimization and learn actionable strategies to improve your site's visibility on Google...</p>
+                            <a href="#" class="read-more-link">READ MORE</a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card animate-on-scroll">
+                        <a href="#"><img src="https://picsum.photos/id/1074/600/400" alt="Abstract technology background"></a>
+                        <div class="blog-card-content">
+                            <div class="blog-meta">
+                                <span><i class="fas fa-calendar-alt"></i> Aug 15, 2025</span>
+                                <span><i class="fas fa-folder-open"></i> Technology</span>
+                            </div>
+                            <h3><a href="#">The Rise of AI in Creative Industries</a></h3>
+                            <p>Explore how artificial intelligence is transforming the landscape of design, art, and content creation, and what it means for creatives...</p>
+                            <a href="#" class="read-more-link">READ MORE</a>
+                        </div>
+                    </article>
+
+                    <article class="blog-card animate-on-scroll">
+                        <a href="#"><img src="https://picsum.photos/id/342/600/400" alt="A person sketching ideas in a notebook"></a>
+                        <div class="blog-card-content">
+                            <div class="blog-meta">
+                                <span><i class="fas fa-calendar-alt"></i> Aug 09, 2025</span>
+                                <span><i class="fas fa-folder-open"></i> Productivity</span>
+                            </div>
+                            <h3><a href="#">5 Productivity Hacks for Creatives and Developers</a></h3>
+                            <p>Boost your workflow and overcome creative blocks with these five proven productivity techniques tailored for the modern professional...</p>
+                            <a href="#" class="read-more-link">READ MORE</a>
+                        </div>
+                    </article>
+                    </div>
+
+                <nav class="pagination animate-on-scroll">
+                    <a href="#" class="page-link prev">«</a>
+                    <a href="#" class="page-link active">1</a>
+                    <a href="#" class="page-link">2</a>
+                    <a href="#" class="page-link">3</a>
+                    <a href="#" class="page-link next">»</a>
+                </nav>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="sponsors">
+                <img src="https://i.imgur.com/uR1Y61R.png" alt="Melrose">
+                <img src="https://i.imgur.com/Y1Z54oH.png" alt="Market Trade">
+                <img src="https://i.imgur.com/4g0b73Q.png" alt="Block Woody">
+                <img src="https://i.imgur.com/vHqjA9U.png" alt="Market Runner">
+            </div>
+            <div class="footer-bottom">
+                <a href="#">ABOUT ME</a>
+                <a href="#">CAREER</a>
+                <a href="#">BLOG</a>
+                <a href="#">GALLERY</a>
+                <a href="#">CONTACT ME</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+
+</body>
+</html>
