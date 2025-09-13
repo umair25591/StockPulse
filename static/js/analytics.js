@@ -30,7 +30,7 @@ $(document).ready(function () {
         $("#analyze-btn").prop("disabled", true);
         $("#loader").hide();
         $("#results").hide().empty();
-        $("#results-container").hide();
+        $analysisLoader.addClass('hidden');
         $("#charts").hide().empty();
         $("#welcome-message").show();
     }
@@ -389,16 +389,16 @@ $(document).ready(function () {
                 $downloadBtn.removeClass('hidden');
                 $downloadChartBtn.removeClass('hidden');
                 if (window.lucide) window.lucide.createIcons();
+                $resultsContainer.removeClass('hidden').addClass('fade-in-up');
+                clearError()
             },
             error: (xhr) => {
-
                 resetToInitialState();
                 showError(xhr.responseJSON?.error || "An unknown server error occurred.");
             },
             complete: () => {
                 if (!analysisData.error) {
                     $analysisLoader.addClass('hidden');
-                    $resultsContainer.removeClass('hidden').addClass('fade-in-up');
                 }
                 $runAnalysisBtn.prop("disabled", false);
                 $buttonText.text("Run Analysis");

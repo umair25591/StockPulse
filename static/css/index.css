@@ -97,7 +97,6 @@ h3 {
     gap: 30px;
 }
 
-/* Animation Classes */
 .animate-on-scroll {
     opacity: 0;
     transform: translateY(30px);
@@ -122,7 +121,6 @@ h3 {
 }
 
 
-/* Header */
 .main-header {
     position: fixed;
     top: 0;
@@ -131,7 +129,6 @@ h3 {
     z-index: 1000;
     background: rgba(17, 17, 17, 0.6);
     backdrop-filter: blur(10px);
-    padding: 20px 0;
     border-bottom: 1px solid var(--border-color);
 }
 
@@ -181,7 +178,6 @@ h3 {
     font-weight: 600;
 }
 
-/* Hero Section */
 .hero {
     padding-top: 150px;
     padding-bottom: 100px;
@@ -212,8 +208,6 @@ h3 {
     background: none;
 }
 
-/* --- FIXED CSS --- */
-/* Style ONLY for the Spline Viewer inside the hero section */
 .hero-image spline-viewer {
     width: 100%;
     height: 100%;
@@ -222,7 +216,6 @@ h3 {
     background: none;
 }
 
-/* About Section */
 .about .grid {
     grid-template-columns: 40% 60%;
     align-items: center;
@@ -248,7 +241,6 @@ h3 {
     color: #000;
 }
 
-/* Experience & Skills Section */
 .experience {
     text-align: center;
 }
@@ -318,7 +310,6 @@ h3 {
     font-weight: 600;
 }
 
-/* Services Section */
 .services>.container>p {
     max-width: 600px;
     margin: 20px 0 50px;
@@ -355,7 +346,6 @@ h3 {
     font-size: 0.9rem;
 }
 
-/* Section Header with Arrows */
 .section-header {
     display: flex;
     justify-content: space-between;
@@ -386,7 +376,6 @@ h3 {
     border-color: var(--primary-green);
 }
 
-/* Testimonials Section */
 .testimonial-box .quote-icon {
     font-size: 3rem;
     color: var(--primary-green);
@@ -421,7 +410,6 @@ h3 {
     font-size: 0.9rem;
 }
 
-/* Pricing Section */
 .pricing .grid {
     grid-template-columns: repeat(3, 1fr);
 }
@@ -437,7 +425,6 @@ h3 {
     transform: translateY(-5px) scale(1.02);
 }
 
-/* Glass Effect for Cards */
 .service-card,
 .pricing-card,
 .testimonial-box {
@@ -491,7 +478,6 @@ h3 {
     border-color: #000;
 }
 
-/* Newsletter Section */
 .newsletter {
     text-align: center;
 }
@@ -516,7 +502,6 @@ h3 {
     outline: none;
 }
 
-/* Footer */
 .main-footer {
     padding-top: 80px;
     border-top: 1px solid var(--border-color);
@@ -558,4 +543,47 @@ h3 {
 
 .footer-bottom a:hover {
     color: var(--primary-green);
+}
+
+.logo-design-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero {
+    padding: 80px 20px;
+}
+
+.hero-text h1 {
+    font-size: 3.5rem;
+    font-weight: bold;
+}
+
+.glow {
+    color: #00ff88;
+    text-shadow: 0 0 0px #00ff88, 0 0 0px #00ff88, 0 0 7px #00ff88;
+}
+
+.testimonial-wrapper {
+    position: relative;
+    overflow: hidden;
+    margin: auto;
+}
+
+.testimonial-box {
+    display: none;
+    text-align: center;
+    padding: 30px;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.testimonial-box.active {
+    display: block;
+}
+
+.section-nav-arrows i {
+    cursor: pointer;
+    font-size: 20px;
+    margin: 0 10px;
 }

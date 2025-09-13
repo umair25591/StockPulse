@@ -124,6 +124,7 @@ def login():
             session["last_name"] = user["last_name"]
             session["role"] = user.get("role", "User")
             session["profile_picture"] = user.get("profile_picture")
+            session["background_image"] = user.get("background_image")
 
             flash("Login successful!", "success")
             return redirect(url_for("dashboard"))
@@ -192,7 +193,6 @@ def signup():
 @app.route('/logout')
 def logout():
     session.clear()
-    flash("You have been logged out.", "info")
     return redirect(url_for("home"))
 
 @app.route('/dashboard')
@@ -200,19 +200,14 @@ def logout():
 def dashboard():
     user_id = ObjectId(session["user_id"])
     
-    # --- Fetch all history for the user ---
     user_history = list(history_collection.find({"user_id": user_id}))
     
-    # --- 1. Calculate Summary Card Stats ---
     total_analyses = len(user_history)
     total_anomalies = sum(item['summary'].get('anomalies_found', 0) for item in user_history)
     
     if user_history:
-        # Find the most used model
         model_counts = Counter(item['model_used'] for item in user_history)
         most_used_model = model_counts.most_common(1)[0][0] if model_counts else "N/A"
-        
-        # Find the last run date
         last_analysis_date = max(item['run_timestamp'] for item in user_history)
     else:
         most_used_model = "N/A"
@@ -225,11 +220,9 @@ def dashboard():
         "last_analysis_date": last_analysis_date
     }
 
-    # --- 2. Get Recent Analyses for the Table ---
     recent_analyses = list(history_collection.find({"user_id": user_id})
                            .sort("run_timestamp", -1).limit(5))
 
-    # --- 3. Get Data for the Activity Chart (last 30 days) ---
     thirty_days_ago = datetime.now() - timedelta(days=30)
     pipeline = [
         {"$match": {"user_id": user_id, "run_timestamp": {"$gte": thirty_days_ago}}},
@@ -269,7 +262,6 @@ def history():
 @app.route('/profile')
 @login_required
 def profile():
-
     user_id = session.get("user_id")
     user_data = users_collection.find_one({"_id": ObjectId(user_id)})
     
@@ -282,33 +274,47 @@ def profile():
 @app.route('/settings', methods=['GET', 'POST'])
 @login_required
 def settings():
+    user_id = ObjectId(session["user_id"])
+
     if request.method == 'POST':
-        # --- Handle Resetting the background ---
         if 'reset_background' in request.form:
-            session.pop('background_image', None) # Remove the key from the session
+            users_collection.update_one(
+                {"_id": user_id},
+                {"$unset": {"background_image": ""}}
+            )
+            session.pop('background_image', None)
             flash('Background has been reset to default.', 'success')
             return redirect(url_for('settings'))
 
-        # --- Handle URL submission ---
         image_url = request.form.get('backgroundImageUrl')
         if image_url:
+            users_collection.update_one(
+                {"_id": user_id},
+                {"$set": {"background_image": image_url}}
+            )
             session['background_image'] = image_url
             flash('Background updated successfully!', 'success')
             return redirect(url_for('settings'))
 
-        # --- Handle File Upload ---
         if 'backgroundImageFile' in request.files:
             file = request.files['backgroundImageFile']
             if file and file.filename != '' and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
+                ext = file.filename.rsplit('.', 1)[1].lower()
+                filename = f"{uuid.uuid4().hex}.{ext}"
                 
-                # Use the general UPLOAD_FOLDER for backgrounds
                 upload_path = app.config['UPLOAD_FOLDER']
                 if not os.path.exists(upload_path):
                     os.makedirs(upload_path)
                 
-                file.save(os.path.join(upload_path, filename))
-                session['background_image'] = url_for('static', filename='uploads/' + filename)
+                file.save(os.path.join(upload_path, secure_filename(filename)))
+                
+                users_collection.update_one(
+                    {"_id": user_id},
+                    {"$set": {"background_image": filename}}
+                )
+                
+                session['background_image'] = filename
+                
                 flash('Background updated successfully!', 'success')
                 return redirect(url_for('settings'))
             elif file.filename != '':
@@ -322,20 +328,17 @@ def settings():
 def update_profile():
     user_id = session.get("user_id")
     
-    # --- Get existing form data ---
     first_name = request.form.get("first_name")
     last_name = request.form.get("last_name")
     email = request.form.get("email")
     address = request.form.get("address")
     role = request.form.get("role")
     
-    # --- Get NEW form data ---
     bio = request.form.get("bio")
     twitter_url = request.form.get("twitter_url")
     linkedin_url = request.form.get("linkedin_url")
     github_url = request.form.get("github_url")
 
-    # --- Prepare data for MongoDB ---
     update_data = {
         "first_name": first_name,
         "last_name": last_name,
@@ -343,20 +346,18 @@ def update_profile():
         "address": address,
         "role": role,
         "bio": bio,
-        "socials": {  # Store social links in a nested object
+        "socials": {
             "twitter": twitter_url,
             "linkedin": linkedin_url,
             "github": github_url,
         }
     }
 
-    # --- Update the database ---
     users_collection.update_one(
         {"_id": ObjectId(user_id)},
         {"$set": update_data}
     )
     
-    # --- Update the session data ---
     session["first_name"] = first_name
     session["last_name"] = last_name
     
@@ -519,8 +520,6 @@ def download_yfinance():
             flash(f"No data found for ticker '{ticker}' in the specified date range.", "warning")
             return redirect(url_for('data_downloader'))
 
-        # 1. Remove the first two rows of data, as requested.
-        # This is the equivalent of 'skiprows' on an already-loaded DataFrame.
         if len(data) > 2:
             data = data.iloc[2:]
         else:
@@ -529,19 +528,13 @@ def download_yfinance():
 
         data.reset_index(inplace=True)
 
-        # First, select the 6 columns we need to work with.
-        # We must drop 'Adj Close' to have 6 columns to match your 6 new names.
         temp_df = data[['Date', 'Open', 'High', 'Low', 'Close', 'Volume']]
 
-        # 2. Add your own column names, as requested.
-        # This force-renames the columns in their current order.
         temp_df.columns = ["Date", "Close", "High", "Low", "Open", "Volume"]
         final_df = temp_df
 
-        # Convert the final DataFrame to a CSV string
         csv_string = final_df.to_csv(index=False)
 
-        # Serve the file for download
         return Response(
             csv_string,
             mimetype="text/csv",

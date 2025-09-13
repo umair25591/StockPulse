@@ -15,26 +15,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
 </head>
 <style>
-    .logo-design-box {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-</style>
-<style>
-    .hero {
-        padding: 80px 20px;
-    }
-
-    .hero-text h1 {
-        font-size: 3.5rem;
-        font-weight: bold;
-    }
-
-    .glow {
-        color: #00ff88;
-        text-shadow: 0 0 0px #00ff88, 0 0 0px #00ff88, 0 0 7px #00ff88;
-    }
+    
 </style>
 
 <body>
@@ -191,22 +172,40 @@
                     <p>Thousands of investors trust StockPulse to guide their financial decisions.</p>
                 </div>
                 <div class="section-nav-arrows animate-on-scroll">
-                    <i class="fas fa-arrow-left"></i>
-                    <i class="fas fa-arrow-right"></i>
+                    <i class="fas fa-arrow-left" id="prev"></i>
+                    <i class="fas fa-arrow-right" id="next"></i>
                 </div>
             </div>
-            <div class="testimonial-box animate-on-scroll" style="text-align: center; padding: 30px;">
-                <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                <p class="quote-text">STOCKPULSE HAS COMPLETELY CHANGED HOW I APPROACH TRADING. THE AI-POWERED INSIGHTS
-                    ARE A GAME-CHANGER, GIVING ME THE CONFIDENCE TO MAKE BOLDER MOVES.</p>
-                <div class="client-info">
-                    <img src="https://i.imgur.com/GprO3kI.jpg" alt="Mark Chen">
-                    <p>Mark Chen, Active Trader</p>
+
+            <div class="testimonial-wrapper">
+                <div class="testimonial-box active">
+                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <p class="quote-text">STOCKPULSE HAS COMPLETELY CHANGED HOW I APPROACH TRADING...</p>
+                    <div class="client-info">
+                        <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Mark Chen">
+                        <p>Mark Chen, Active Trader</p>
+                    </div>
+                </div>
+
+                <div class="testimonial-box">
+                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <p class="quote-text">THE PLATFORM IS EASY TO USE AND THE ANOMALY DETECTION IS VERY ACCURATE.</p>
+                    <div class="client-info">
+                        <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Sarah Lee">
+                        <p>Sarah Lee, Long-term Investor</p>
+                    </div>
+                </div>
+
+                <div class="testimonial-box">
+                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <p class="quote-text">I SAVED HOURS OF ANALYSIS TIME. THIS TOOL IS A MUST-HAVE FOR TRADERS.</p>
+                    <div class="client-info">
+                        <img src="{{ url_for('static', filename='images/profile.png') }}" alt="David Kim">
+                        <p>David Kim, Financial Analyst</p>
+                    </div>
                 </div>
             </div>
         </div>
-
-
 
         <section class="newsletter section-padding">
             <div class="container">
@@ -217,6 +216,7 @@
                 </form>
             </div>
         </section>
+
     </main>
 
     <footer class="main-footer">

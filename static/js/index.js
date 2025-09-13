@@ -44,3 +44,30 @@ document.addEventListener('DOMContentLoaded', function () {
         skillObserver.observe(skillsGrid);
     }
 });
+
+const testimonials = document.querySelectorAll('.testimonial-box');
+const prev = document.getElementById('prev');
+const next = document.getElementById('next');
+let index = 0;
+
+function showTestimonial(i) {
+    testimonials.forEach((t, idx) => {
+        t.classList.toggle('active', idx === i);
+    });
+}
+
+next.addEventListener('click', () => {
+    index = (index + 1) % testimonials.length;
+    showTestimonial(index);
+});
+
+prev.addEventListener('click', () => {
+    index = (index - 1 + testimonials.length) % testimonials.length;
+    showTestimonial(index);
+});
+
+// Auto slide every 5s
+setInterval(() => {
+    index = (index + 1) % testimonials.length;
+    showTestimonial(index);
+}, 5000);

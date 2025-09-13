@@ -15,10 +15,19 @@
     {% block style %}{% endblock %}
 
 </head>
-<body class="bg-black text-zinc-300" 
-        {% if session.background_image %} 
-            style="background-image: url('{{ session.background_image }}');" 
-        {% endif %}>
+{% set bg_image = session.get('background_image') %}
+{% set default_bg = url_for('static', filename='images/bg-img.png') %}
+
+{% if bg_image and (bg_image.startswith('http://') or bg_image.startswith('https://')) %}
+    <body class="bg-black text-zinc-300" style="background-image: url('{{ bg_image }}');">
+
+{% elif bg_image %}
+    <body class="bg-black text-zinc-300" style="background-image: url('{{ url_for('static', filename='uploads/' + bg_image) }}');">
+
+{% else %}
+    <body class="bg-black text-zinc-300" style="background-image: url('{{ default_bg }}');">
+
+{% endif %}
 
     <div class="flex h-screen">
         
