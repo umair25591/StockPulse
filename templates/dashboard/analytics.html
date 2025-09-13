@@ -1,6 +1,6 @@
 {% extends "dashboard/layout.html" %}
 
-{% block title %}Advanced Analytics{% endblock %}
+{% block title %}Analytics{% endblock %}
 
 {% block style %}
 <style>
@@ -27,7 +27,6 @@
     border: 1px solid rgba(255, 255, 255, 0.15);
   }
 
-  /* Add this to your style block */
   .shimmer-bg {
     position: relative;
     overflow: hidden;
@@ -51,15 +50,12 @@
     }
   }
 
-  /* Add these styles for the preview table */
   #csv-preview-table thead th {
     position: sticky;
     top: 0;
     background-color: rgba(39, 39, 42, 0.8);
-    /* zinc-800 with opacity */
     backdrop-filter: blur(4px);
     color: #e4e4e7;
-    /* text-zinc-200 */
     font-weight: 600;
     text-align: left;
     padding: 12px 16px;
@@ -69,7 +65,6 @@
     padding: 10px 16px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     color: #d4d4d8;
-    /* text-zinc-300 */
     font-size: 0.875rem;
     white-space: nowrap;
   }
@@ -81,7 +76,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="flex flex-col lg:flex-row gap-2 h-full">
+<div class="flex flex-col lg:flex-row gap-6 h-full">
 
   <aside class="lg:w-96 flex-shrink-0 flex flex-col gap-6">
     <div class="glass-effect p-6 flex-grow flex flex-col">
@@ -99,15 +94,16 @@
         </div>
 
         <div>
-            <label for="stock-ticker" class="block text-sm font-semibold text-zinc-300 mb-2">2. Enter Stock Ticker</label>
-            <input type="text" id="stock-ticker" placeholder="e.g., AAPL, GOOGL"
-                  class="w-full bg-black/20 border border-zinc-700 text-zinc-300 text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+          <label for="stock-ticker" class="block text-sm font-semibold text-zinc-300 mb-2">2. Enter Stock Ticker</label>
+          <input type="text" id="stock-ticker" placeholder="e.g., AAPL, GOOGL"
+            class="w-full bg-black/20 border border-zinc-700 text-zinc-300 text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
         </div>
 
         <div>
           <label for="model-selector" class="block text-sm font-semibold text-zinc-300 mb-2">2. Select Clustering
             Model</label>
-          <select id="model-selector" class="w-full bg-black/20 border border-zinc-700 text-zinc-300 text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+          <select id="model-selector"
+            class="w-full bg-black/20 border border-zinc-700 text-zinc-300 text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
             <option value="kmeans" selected>K-Means Clustering</option>
             <option value="gmm">Gaussian Mixture (GMM)</option>
             <option value="isolation_forest">Isolation Forest</option>
@@ -140,8 +136,10 @@
 
   <main class="flex-1 flex flex-col">
     <div id="welcome-message" class="glass-effect flex-grow flex flex-col items-center justify-center text-center p-6">
-      <h1 class="text-4xl font-bold bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">Stock Analysis</h1>
-      <p class="text-zinc-400 mt-4 max-w-lg">Upload your stock data, select a model, and set an anomaly threshold to begin visualizing market behavior.</p>
+      <h1 class="text-4xl font-bold bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">Stock
+        Analysis</h1>
+      <p class="text-zinc-400 mt-4 max-w-lg">Upload your stock data, select a model, and set an anomaly threshold to
+        begin visualizing market behavior.</p>
     </div>
 
     <div id="analysis-loader" class="hidden h-full flex flex-col gap-6">
@@ -179,19 +177,20 @@
       </div>
     </div>
 
-    <div id="results-container" class="hidden h-full flex flex-col gap-2">
+    <div id="results-container" class="hidden h-full flex flex-col gap-6">
 
       <div class="glass-effect flex items-baseline p-4 rounded-lg">
-          <h2 class="text-2xl font-bold text-white">Analysis Results for:</h2>
-          <span id="stock-symbol-display" class="ml-3 text-2xl font-bold text-green-400"></span>
+        <h2 class="text-2xl font-bold text-white">Analysis Results for:</h2>
+        <span id="stock-symbol-display" class="ml-3 text-2xl font-bold text-green-400"></span>
       </div>
 
       <div id="summary-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       </div>
 
       <div class="glass-effect p-4 flex-grow flex flex-col">
-        <div class="flex justify-between items-center mb-4">
-          <nav id="chart-tabs" class="flex space-x-2 sm:space-x-4" aria-label="Tabs">
+        <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4 mb-4">
+
+          <nav id="chart-tabs" class="flex flex-wrap gap-y-2 space-x-2 sm:space-x-4" aria-label="Tabs">
             <button data-chart="cluster" class="chart-tab active-tab">Cluster View</button>
             <button data-chart="distance" class="chart-tab">Anomaly Distance</button>
             <button data-chart="volume" class="chart-tab">Volume Analysis</button>
@@ -199,18 +198,18 @@
             <button data-chart="features" class="chart-tab">Feature Comparison</button>
           </nav>
 
-          <div class="flex items-center gap-4">
-              <button id="download-csv" class="hidden px-4 py-2 text-sm font-semibold text-white bg-zinc-800/70
+          <div class="flex items-center flex-shrink-0 gap-4">
+            <button id="download-csv" class="hidden px-4 py-2 text-sm font-semibold text-white bg-zinc-800/70
                   hover:bg-zinc-700/90 rounded-lg flex items-center gap-2">
-                  <i data-lucide="download-cloud" class="w-4 h-4"></i>
-                  Download CSV
-              </button>
+              <i data-lucide="download-cloud" class="w-4 h-4"></i>
+              Download CSV
+            </button>
 
-              <button id="download-chart" class="hidden px-4 py-2 text-sm font-semibold text-white bg-zinc-800/70
+            <button id="download-chart" class="hidden px-4 py-2 text-sm font-semibold text-white bg-zinc-800/70
                   hover:bg-zinc-700/90 rounded-lg flex items-center gap-2">
-                  <i data-lucide="image" class="w-4 h-4"></i>
-                  Download Chart
-              </button>
+              <i data-lucide="image" class="w-4 h-4"></i>
+              Download Chart
+            </button>
           </div>
 
         </div>
@@ -221,6 +220,7 @@
       </div>
 
     </div>
+
   </main>
 </div>
 {% endblock %}
@@ -229,7 +229,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom/dist/chartjs-plugin-zoom.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial/dist/chartjs-chart-financial.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation/dist/chartjs-plugin-annotation.min.js"></script>

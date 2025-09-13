@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Pulse - Introduction to Anomaly Detection in Stocks</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.57/build/spline-viewer.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog-detail.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+</head>
+<body>
+
+    <spline-viewer id="spline-background" url="https://prod.spline.design/BuD8cTwsezQIv0R0/scene.splinecode"></spline-viewer>
+
+           <header class="main-header">
+        <div class="container">
+            <a href="{{ url_for('home') }}" class="logo logo-design-box"><img src="{{ url_for('static', filename='images/logomain.png') }}" width="95px" alt="Data Science in Stock Market"></a>
+            <nav class="main-nav">
+                <a href="{{ url_for('home') }}" >HOME</a>
+                <a href="{{ url_for('about') }}">ABOUT</a>
+                <a href="{{ url_for('blog') }}" class="active">BLOG</a>
+            </nav>
+            <div class="header-right">
+                <a href="{{ url_for('login') }}" class="contact-btn"><i class="fas fa-user"></i> Login</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="blog-post-section section-padding">
+            <div class="container">
+                <article class="blog-post-content">
+                    
+                    <header class="post-header">
+                        <div class="post-meta">
+                            <span><i class="fas fa-calendar-alt text-green"></i> Sep 15, 2025</span>
+                            <span><i class="fas fa-folder-open text-green"></i> Data Science</span>
+                            <span><i class="fas fa-user text-green"></i> By Jane Doe</span>
+                        </div>
+                        <h1 class="post-title">Spotting the Signs: An Introduction to Anomaly Detection in Stock Trading</h1>
+                        <p class="post-excerpt">Learn how unexpected spikes and dips in stock prices can signal major market events, and how data science tools like StockPulse can help you detect them early.</p>
+                    </header>
+                    
+                    <div class="featured-image">
+                        <img src="https://picsum.photos/id/1078/1200/600" alt="Magnifying glass over a stock chart">
+                    </div>
+
+                    <div class="post-body">
+                        <p>In the world of stock trading, patterns are everywhere. But what happens when a pattern is broken? These breaks, or "anomalies," are often the most critical pieces of information a trader can have. They can be early warnings of market manipulation, economic crises, or even system glitches.</p>
+                        
+                        <h2>What is an Anomaly?</h2>
+                        <p>An anomaly is a data point that deviates significantly from the rest of the dataset. In stock terms, think of a sudden, unexplained price surge or a dramatic plunge that doesn't align with any public news. These aren't just random fluctuations; they are signals that something unusual is happening behind the scenes.</p>
+                        
+                        <blockquote>
+                            "The goal of a successful trader is to make the best trades. Money is secondary." - Alexander Elder
+                        </blockquote>
+
+                        <h2>Why Manual Detection Fails</h2>
+                        <p>With thousands of trades happening every second, manually tracking anomalies is impossible. The sheer volume and velocity of data require a more sophisticated approach. This is where data science comes in, providing automated systems that can monitor markets in real-time and flag irregularities that a human eye would miss.</p>
+
+                        <div class="image-in-post">
+                            <img src="https://picsum.photos/id/431/800/400" alt="A screen showing complex financial data and code">
+                            <figcaption>Data-driven systems can process vast amounts of information to find anomalies.</figcaption>
+                        </div>
+
+                        <h2>How StockPulse Helps</h2>
+                        <p>Projects like StockPulse are designed to tackle this exact challenge. By using powerful algorithms like Isolation Forest, we can analyze historical stock data to understand its "normal" behavior. When a new price movement doesn't fit this learned pattern, the system flags it for review.</p>
+                        
+                        <p>This automated approach empowers investors to mitigate risks, investigate potential fraud, and make smarter, data-driven decisions in a market where every second counts.</p>
+                    </div>
+
+                    <footer class="post-footer">
+                        <div class="tags-container">
+                            <strong>Tags:</strong>
+                            <a href="#">Anomaly Detection</a>
+                            <a href="#">Data Science</a>
+                            <a href="#">Investing</a>
+                            <a href="#">Stock Market</a>
+                        </div>
+                        <div class="share-container">
+                            <strong>Share:</strong>
+                            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </footer>
+                </article>
+
+                <div class="author-box animate-on-scroll">
+                    <img src="https://i.pravatar.cc/150?img=25" alt="Author Jane Doe">
+                    <div class="author-info">
+                        <h3>About Jane Doe</h3>
+                        <p>Jane is a lead Data Scientist at StockPulse, specializing in time-series analysis and machine learning models for financial markets. She believes in making data science accessible to all investors.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+     <footer class="main-footer">
+        <div class="container">
+            
+            <div class="footer-bottom">
+                <a href="{{ url_for('home') }}">HOME</a>
+                <a href="{{ url_for('about') }}">ABOUT</a>
+                <a href="{{ url_for('blog') }}">BLOG</a>
+               
+            </div>
+        </div>
+    </footer>
+    
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>

@@ -29,7 +29,7 @@ def load_csv_with_fix(path, spark):
 
 def create_spark_session() -> SparkSession:
 
-    venv_python = r"C:\Users\muham\Desktop\StockPulse\venv311\Scripts\python.exe"
+    venv_python = r"C:\Users\muham\Desktop\StockPulse-Latest\venv\Scripts\python.exe"
 
     os.environ["PYSPARK_PYTHON"] = venv_python
     os.environ["PYSPARK_DRIVER_PYTHON"] = venv_python

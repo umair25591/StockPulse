@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Pulse - Unmasking Market Manipulation with Data Science</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.57/build/spline-viewer.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog-detail.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+</head>
+<body>
+
+    <spline-viewer id="spline-background" url="https://prod.spline.design/BuD8cTwsezQIv0R0/scene.splinecode"></spline-viewer>
+
+           <header class="main-header">
+        <div class="container">
+            <a href="{{ url_for('home') }}" class="logo logo-design-box"><img src="{{ url_for('static', filename='images/logomain.png') }}" width="95px" alt="Data Science in Stock Market"></a>
+            <nav class="main-nav">
+                <a href="{{ url_for('home') }}" >HOME</a>
+                <a href="{{ url_for('about') }}">ABOUT</a>
+                <a href="{{ url_for('blog') }}" class="active">BLOG</a>
+            </nav>
+            <div class="header-right">
+                <a href="{{ url_for('login') }}" class="contact-btn"><i class="fas fa-user"></i> Login</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="blog-post-section section-padding">
+            <div class="container">
+                <article class="blog-post-content">
+                    
+                    <header class="post-header">
+                        <div class="post-meta">
+                            <span><i class="fas fa-calendar-alt text-green"></i> Oct 06, 2025</span>
+                            <span><i class="fas fa-folder-open text-green"></i> Market Analysis</span>
+                            <span><i class="fas fa-user text-green"></i> By David Chen</span>
+                        </div>
+                        <h1 class="post-title">Unmasking Market Manipulation: How StockPulse Tracks Irregularities</h1>
+                        <p class="post-excerpt">From "pump and dump" schemes to insider trading, market manipulation is a real threat. Learn how anomaly detection can serve as a powerful watchdog for market integrity.</p>
+                    </header>
+                    
+                    <div class="featured-image">
+                        <img src="https://picsum.photos/id/1075/1200/600" alt="Chess board with a single pawn out of place">
+                    </div>
+
+                    <div class="post-body">
+                        <p>One of the most critical applications for anomaly detection in finance is the identification of potential market manipulation. Malicious actors often leave behind statistical footprints in trading data, and sophisticated algorithms can be trained to spot these tell-tale signs.</p>
+                        
+                        <h2>Common Forms of Manipulation</h2>
+                        <p>Market manipulation can take many forms, but most create data anomalies:</p>
+                        <ul>
+                            <li><strong>Pump and Dump:</strong> Artificially inflating a stock's price through false positive statements, then selling off the shares to unsuspecting investors. This often results in a rapid, unnatural price spike followed by a crash.</li>
+                            <li><strong>Spoofing:</strong> Placing large orders with no intention of executing them to create a false impression of supply or demand. This can cause erratic volume spikes.</li>
+                            <li><strong>Insider Trading:</strong> Trading on non-public information. This can sometimes be detected by unusually profitable trades or activity preceding a major company announcement.</li>
+                        </ul>
+                        
+                        <blockquote>
+                            "An investment in knowledge pays the best interest." - Benjamin Franklin
+                        </blockquote>
+
+                        <h2>The Role of Anomaly Detection</h2>
+                        <p>A single manipulative trade might be hard to spot, but a coordinated effort creates patterns that stand out. Our system at StockPulse is designed to flag these very patterns. A sudden surge in volume combined with a price spike for a low-profile stock? That's an anomaly. A series of perfectly timed trades right before an earnings release? Also an anomaly.</p>
+
+                        <div class="image-in-post">
+                            <img src="https://picsum.photos/id/1079/800/400" alt="Person in a hoodie looking at multiple screens of code, symbolizing a cyber threat">
+                            <figcaption>Sophisticated threats require sophisticated detection methods.</figcaption>
+                        </div>
+
+                        <p>By providing a tool for early warnings, StockPulse aims to help not only individual investors protect their assets but also to contribute to a more transparent and fair market environment for everyone. Detecting these irregularities is the first step toward ensuring market integrity.</p>
+                    </div>
+
+                    <footer class="post-footer">
+                        <div class="tags-container">
+                            <strong>Tags:</strong>
+                            <a href="#">Market Manipulation</a>
+                            <a href="#">Fraud Detection</a>
+                            <a href="#">Data Science</a>
+                            <a href="#">StockPulse</a>
+                        </div>
+                        <div class="share-container">
+                            <strong>Share:</strong>
+                            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </footer>
+                </article>
+
+                <div class="author-box animate-on-scroll">
+                    <img src="https://i.pravatar.cc/150?img=11" alt="Author David Chen">
+                    <div class="author-info">
+                        <h3>About David Chen</h3>
+                        <p>David is a financial crimes investigator with over 15 years of experience. He now consults on the StockPulse project, helping to align its data science capabilities with real-world fraud detection strategies.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            
+            <div class="footer-bottom">
+                <a href="{{ url_for('home') }}">HOME</a>
+                <a href="{{ url_for('about') }}">ABOUT</a>
+                <a href="{{ url_for('blog') }}">BLOG</a>
+               
+            </div>
+        </div>
+    </footer>
+    
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>

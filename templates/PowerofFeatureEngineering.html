@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Pulse - The Power of Feature Engineering in Finance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.57/build/spline-viewer.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog-detail.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+</head>
+<body>
+
+    <spline-viewer id="spline-background" url="https://prod.spline.design/BuD8cTwsezQIv0R0/scene.splinecode"></spline-viewer>
+
+             <header class="main-header">
+        <div class="container">
+            <a href="{{ url_for('home') }}" class="logo logo-design-box"><img src="{{ url_for('static', filename='images/logomain.png') }}" width="95px" alt="Data Science in Stock Market"></a>
+            <nav class="main-nav">
+                <a href="{{ url_for('home') }}" >HOME</a>
+                <a href="{{ url_for('about') }}">ABOUT</a>
+                <a href="{{ url_for('blog') }}" class="active">BLOG</a>
+            </nav>
+            <div class="header-right">
+                <a href="{{ url_for('login') }}" class="contact-btn"><i class="fas fa-user"></i> Login</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="blog-post-section section-padding">
+            <div class="container">
+                <article class="blog-post-content">
+                    
+                    <header class="post-header">
+                        <div class="post-meta">
+                            <span><i class="fas fa-calendar-alt text-green"></i> Sep 22, 2025</span>
+                            <span><i class="fas fa-folder-open text-green"></i> Machine Learning</span>
+                            <span><i class="fas fa-user text-green"></i> By Priya Sharma</span>
+                        </div>
+                        <h1 class="post-title">From Raw Data to Rich Insights: The Power of Feature Engineering</h1>
+                        <p class="post-excerpt">Raw stock data is just the beginning. Learn how creating new features like moving averages and volatility indicators can unlock deeper insights and improve model accuracy.</p>
+                    </header>
+                    
+                    <div class="featured-image">
+                        <img src="https://picsum.photos/id/119/1200/600" alt="Blueprint designs on a desk">
+                    </div>
+
+                    <div class="post-body">
+                        <p>In data science, the quality of your input data directly determines the quality of your output. This is where <strong>feature engineering</strong> comes in. It's the process of using domain knowledge to create new variables (features) from your raw dataset that make machine learning algorithms work better.</p>
+                        
+                        <h2>Why Not Just Use Raw Data?</h2>
+                        <p>A typical stock dataset includes Open, High, Low, and Close prices. While useful, this raw data doesn't explicitly capture concepts like trends, momentum, or volatility. A machine learning model might struggle to learn these concepts on its own. By engineering features, we provide the model with more meaningful signals.</p>
+                        
+                        <h2>Common Features in Financial Analysis</h2>
+                        <p>At StockPulse, feature engineering is a critical step in our data pipeline. Here are a few examples of features we create:</p>
+                        <ul>
+                            <li><strong>Moving Averages:</strong> Calculating the average price over a specific period (e.g., 50-day or 200-day) helps smooth out noise and identify long-term trends.</li>
+                            <li><strong>Volatility Indicators:</strong> Features like standard deviation or Bollinger Bands measure how much the stock price is fluctuating, which is crucial for risk assessment.</li>
+                            <li><strong>Momentum Indicators:</strong> The Relative Strength Index (RSI) is a classic example. It helps determine if a stock is overbought or oversold.</li>
+                            <li><strong>Daily Returns:</strong> Calculating the percentage change in price from one day to the next provides a normalized view of performance.</li>
+                        </ul>
+
+                        <blockquote>
+                            "The best machine learning models are not the ones with the most complex algorithms, but the ones with the best features."
+                        </blockquote>
+
+                        <p>By transforming raw price data into a rich set of features, we give our anomaly detection models the context they need to distinguish between normal market jitters and a truly significant event. It’s a crucial step that turns simple data into actionable intelligence.</p>
+                    </div>
+
+                    <footer class="post-footer">
+                        <div class="tags-container">
+                            <strong>Tags:</strong>
+                            <a href="#">Feature Engineering</a>
+                            <a href="#">Data Science</a>
+                            <a href="#">Machine Learning</a>
+                            <a href="#">Finance</a>
+                        </div>
+                        <div class="share-container">
+                            <strong>Share:</strong>
+                            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </footer>
+                </article>
+
+                <div class="author-box animate-on-scroll">
+                    <img src="https://i.pravatar.cc/150?img=32" alt="Author Priya Sharma">
+                    <div class="author-info">
+                        <h3>About Priya Sharma</h3>
+                        <p>Priya is a Machine Learning Engineer at StockPulse with a passion for transforming raw data into powerful predictive models. She holds a Master's degree in Computer Science from Stanford University.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            
+            <div class="footer-bottom">
+                <a href="{{ url_for('home') }}">HOME</a>
+                <a href="{{ url_for('about') }}">ABOUT</a>
+                <a href="{{ url_for('blog') }}">BLOG</a>
+               
+            </div>
+        </div>
+    </footer>
+    
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>

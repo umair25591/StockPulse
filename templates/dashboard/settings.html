@@ -1,0 +1,46 @@
+{% extends "dashboard/layout.html" %}
+
+{% block title %}Settings{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <h1 class="text-3xl font-bold text-white mb-6">Settings</h1>
+
+    <div class="glass-effect p-8 rounded-xl">
+        <h2 class="text-xl font-semibold text-white mb-2">Customize Background</h2>
+        <p class="text-zinc-400 mb-6">Change the dashboard's background image by providing a URL or uploading your own file.</p>
+
+        <form method="POST" enctype="multipart/form-data" class="space-y-6">
+            
+            <div>
+                <label for="backgroundImageUrl" class="block text-sm font-medium text-zinc-300 mb-2">Background Image URL</label>
+                <div class="flex items-center gap-4">
+                    <input type="url" name="backgroundImageUrl" id="backgroundImageUrl" placeholder="https://images.unsplash.com/..." class="w-full bg-black/20 border border-zinc-700 text-zinc-300 text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <button type="submit" class="px-4 py-2 text-sm font-semibold text-white bg-green-600 hover:bg-green-500 rounded-lg whitespace-nowrap">Set URL</button>
+                </div>
+            </div>
+
+            <div class="flex items-center text-center">
+                <hr class="flex-grow border-zinc-700">
+                <span class="px-4 text-zinc-500 text-sm">OR</span>
+                <hr class="flex-grow border-zinc-700">
+            </div>
+            
+            <div>
+                <label for="backgroundImageFile" class="block text-sm font-medium text-zinc-300 mb-2">Upload an Image</label>
+                 <div class="flex items-center gap-4">
+                    <input type="file" name="backgroundImageFile" id="backgroundImageFile" class="w-full text-sm text-zinc-300 bg-black/20 border border-zinc-700 rounded-lg cursor-pointer
+                                file:bg-zinc-800 file:hover:bg-zinc-700 file:border-none file:text-white file:font-semibold 
+                                file:px-4 file:py-2 file:mr-4 file:cursor-pointer">
+                    <button type="submit" class="px-4 py-2 text-sm font-semibold text-white bg-green-600 hover:bg-green-500 rounded-lg whitespace-nowrap">Upload</button>
+                </div>
+            </div>
+        </form>
+
+        <form method="POST" class="mt-8 border-t border-zinc-800 pt-6">
+             <button type="submit" name="reset_background" value="true" class="px-5 py-2 text-sm font-medium text-zinc-300 bg-red-800/50 hover:bg-red-700/50 rounded-lg">Reset to Default</button>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

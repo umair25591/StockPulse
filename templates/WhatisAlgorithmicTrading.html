@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Pulse - What is Algorithmic Trading?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.57/build/spline-viewer.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog-detail.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+</head>
+<body>
+
+    <spline-viewer id="spline-background" url="https://prod.spline.design/BuD8cTwsezQIv0R0/scene.splinecode"></spline-viewer>
+
+            <header class="main-header">
+        <div class="container">
+            <a href="{{ url_for('home') }}" class="logo logo-design-box"><img src="{{ url_for('static', filename='images/logomain.png') }}" width="95px" alt="Data Science in Stock Market"></a>
+            <nav class="main-nav">
+                <a href="{{ url_for('home') }}" >HOME</a>
+                <a href="{{ url_for('about') }}">ABOUT</a>
+                <a href="{{ url_for('blog') }}" class="active">BLOG</a>
+            </nav>
+            <div class="header-right">
+                <a href="{{ url_for('login') }}" class="contact-btn"><i class="fas fa-user"></i> Login</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="blog-post-section section-padding">
+            <div class="container">
+                <article class="blog-post-content">
+                    
+                    <header class="post-header">
+                        <div class="post-meta">
+                            <span><i class="fas fa-calendar-alt text-green"></i> Oct 17, 2025</span>
+                            <span><i class="fas fa-folder-open text-green"></i> Technology</span>
+                            <span><i class="fas fa-user text-green"></i> By Priya Sharma</span>
+                        </div>
+                        <h1 class="post-title">What is 'Algorithmic Trading' and How Does it Shape the Market?</h1>
+                        <p class="post-excerpt">The majority of trades today aren't made by humans. Dive into the world of algorithmic trading to understand the forces driving modern financial markets.</p>
+                    </header>
+                    
+                    <div class="featured-image">
+                        <img src="https://picsum.photos/id/54/1200/600" alt="Abstract glowing lines of data moving quickly">
+                    </div>
+
+                    <div class="post-body">
+                        <p>Algorithmic trading (or "algo-trading") is a method of executing orders using automated, pre-programmed trading instructions accounting for variables such as time, price, and volume. It's a broad term that covers everything from simple strategies to highly complex artificial intelligence systems.</p>
+                        
+                        <h2>Why Use Algorithms?</h2>
+                        <p>Algorithms have several key advantages over human traders:</p>
+                        <ul>
+                            <li><strong>Speed:</strong> Algorithms can analyze markets and execute trades in microseconds, a speed impossible for humans.</li>
+                            <li><strong>Accuracy:</strong> They eliminate the risk of manual errors, like typing the wrong number of shares.</li>
+                            <li><strong>No Emotion:</strong> Algorithms stick to their programming and are immune to the fear and greed that can plague human decision-making.</li>
+                            <li><strong>Backtesting:</strong> Strategies can be rigorously tested on historical data to see how they would have performed before risking any real capital.</li>
+                        </ul>
+                        
+                        <blockquote>
+                            "The machine does not beat you. It's the developer of the machine who beats you." - A quant trader
+                        </blockquote>
+
+                        <h2>How Does This Relate to Anomaly Detection?</h2>
+                        <p>The rise of algorithmic trading is a major reason why anomaly detection is so crucial. A bug in a trading algorithm or a "flash crash" caused by interacting algorithms can generate massive, unexpected market moves. These are precisely the types of system-driven anomalies that StockPulse is designed to flag.</p>
+                        
+                        <p>Understanding the algorithmic landscape is key to contextualizing the data we see. When an anomaly is detected, it could be a sign of human manipulation, a reaction to news, or the result of a rogue algorithm. By using data science to monitor the market's pulse, we can better understand the complex ecosystem we operate in.</p>
+                    </div>
+
+                    <footer class="post-footer">
+                        <div class="tags-container">
+                            <strong>Tags:</strong>
+                            <a href="#">Algorithmic Trading</a>
+                            <a href="#">FinTech</a>
+                            <a href="#">AI in Finance</a>
+                            <a href="#">Technology</a>
+                        </div>
+                        <div class="share-container">
+                            <strong>Share:</strong>
+                            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </footer>
+                </article>
+
+                <div class="author-box animate-on-scroll">
+                    <img src="https://i.pravatar.cc/150?img=32" alt="Author Priya Sharma">
+                    <div class="author-info">
+                        <h3>About Priya Sharma</h3>
+                        <p>Priya is a Machine Learning Engineer at StockPulse with a passion for transforming raw data into powerful predictive models. She holds a Master's degree in Computer Science from Stanford University.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            
+            <div class="footer-bottom">
+                <a href="{{ url_for('home') }}">HOME</a>
+                <a href="{{ url_for('about') }}">ABOUT</a>
+                <a href="{{ url_for('blog') }}">BLOG</a>
+               
+            </div>
+        </div>
+    </footer>
+    
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>

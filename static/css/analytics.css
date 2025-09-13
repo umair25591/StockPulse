@@ -1,28 +1,28 @@
-/* Sidebar Cards */
-aside .space-y-2, 
+aside .space-y-2,
 aside .pt-6 {
-    background: rgba(31, 41, 55, 0.5); /* gray-800 glass */
+    background: rgba(31, 41, 55, 0.5);
     border: 1px solid rgba(16, 185, 129, 0.2);
     border-radius: 12px;
     padding: 1rem;
     transition: all 0.3s ease;
 }
-aside .space-y-2:hover, 
+
+aside .space-y-2:hover,
 aside .pt-6:hover {
     border-color: rgba(16, 185, 129, 0.5);
-    box-shadow: 0 4px 20px rgba(16,185,129,0.2);
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.2);
 }
 
-/* File Input */
 #csv-file {
-    background: rgba(17,24,39,0.8);
-    border: 1px solid rgba(75,85,99,0.8);
+    background: rgba(17, 24, 39, 0.8);
+    border: 1px solid rgba(75, 85, 99, 0.8);
     border-radius: 8px;
     padding: 0.4rem;
     color: #d1d5db;
 }
+
 #csv-file::file-selector-button {
-    background: linear-gradient(90deg,#10b981,#059669);
+    background: linear-gradient(90deg, #10b981, #059669);
     color: #fff;
     border: none;
     padding: 0.4rem 0.8rem;
@@ -31,69 +31,69 @@ aside .pt-6:hover {
     cursor: pointer;
     transition: transform 0.2s;
 }
+
 #csv-file::file-selector-button:hover {
     transform: scale(1.05);
 }
 
-/* Select Dropdown */
 #model-selector {
-    background: rgba(17,24,39,0.8);
-    border: 1px solid rgba(75,85,99,0.8);
+    background: rgba(17, 24, 39, 0.8);
+    border: 1px solid rgba(75, 85, 99, 0.8);
     border-radius: 8px;
     color: #e5e7eb;
 }
 
-/* Run Analysis Button */
 #run-analysis {
-    background: linear-gradient(90deg,#10b981,#059669);
-    box-shadow: 0 4px 15px rgba(16,185,129,0.4);
+    background: linear-gradient(90deg, #10b981, #059669);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
+
 #run-analysis:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(16,185,129,0.6);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.6);
 }
 
-/* Loader inside button */
 .loader {
-    border: 3px solid rgba(255,255,255,0.2);
+    border: 3px solid rgba(255, 255, 255, 0.2);
     border-top-color: #10b981;
     width: 20px;
     height: 20px;
 }
 
-/* Chart Tabs → Pill Style */
 .chart-tab {
     padding: 0.5rem 1rem;
     border-radius: 20px;
     border: 1px solid transparent;
-    background: rgba(31,41,55,0.5);
+    background: rgba(31, 41, 55, 0.5);
     font-weight: 600;
     color: #9ca3af;
     transition: all 0.3s ease;
 }
+
 .chart-tab:hover {
     color: #10b981;
-    border-color: rgba(16,185,129,0.4);
+    border-color: rgba(16, 185, 129, 0.4);
 }
+
 .chart-tab.active-tab {
-    background: linear-gradient(90deg,#10b981,#059669);
+    background: linear-gradient(90deg, #10b981, #059669);
     color: #fff;
     border: none;
 }
 
-/* Summary Cards Gradient Border */
-#summary-cards > div {
+#summary-cards>div {
     position: relative;
     overflow: hidden;
 }
-#summary-cards > div::before {
+
+#summary-cards>div::before {
     content: "";
     position: absolute;
     inset: 0;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(90deg,#10b981,#34d399,#10b981);
+    background: linear-gradient(90deg, #10b981, #34d399, #10b981);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;

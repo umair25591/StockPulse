@@ -22,6 +22,11 @@ import yfinance as yf
 UPLOAD_FOLDER = 'static/uploads'
 PROFILE_UPLOAD_FOLDER = "static/uploads/profiles"
 RESULTS_FOLDER = 'results'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 load_dotenv()
 
@@ -54,6 +59,54 @@ def about():
 @app.route('/blog')
 def blog():
     return render_template('blog.html')
+
+@app.route('/blog/isolation-forest-vs-svm')
+def blog_isolation_forest_vs_svm():
+    return render_template('IsolationForestvs.SVM.html')
+
+@app.route('/blog/volatility-guide')
+def blog_volatility_guide():
+    return render_template("A Beginner'sGuidetoStockMarketVolatility.html")
+
+@app.route('/blog/myths-debunked')
+def blog_myths_debunked():
+    return render_template('7CommonStockMarketMythsDebunked.html')
+
+@app.route('/blog/resilient-portfolio')
+def blog_resilient_portfolio():
+    return render_template('BuildingaResilientPortfolio.html')
+
+@app.route('/blog/candlesticks-guide')
+def blog_candlesticks_guide():
+    return render_template('DecodingtheCandlesticks.html')
+
+@app.route('/blog/power-of-feature-engineering')
+def blog_power_of_feature_engineering():
+    return render_template('PowerofFeatureEngineering.html')
+
+@app.route('/blog/spotting-the-signs')
+def blog_spotting_the_signs():
+    return render_template('SpottingtheSigns.html')
+
+@app.route('/blog/art-of-visualization')
+def blog_art_of_visualization():
+    return render_template('TheArtofVisualization.html')
+
+@app.route('/blog/future-of-finance')
+def blog_future_of_finance():
+    return render_template('TheFutureofFinance.html')
+
+@app.route('/blog/unmasking-market-manipulation')
+def blog_unmasking_market_manipulation():
+    return render_template('UnmaskingMarketManipulation.html')
+
+@app.route('/blog/what-is-algorithmic-trading')
+def blog_what_is_algorithmic_trading():
+    return render_template('WhatisAlgorithmicTrading.html')
+
+@app.route('/blog/why-data-science-is-your-ally')
+def blog_why_data_science_is_your_ally():
+    return render_template('WhyDataScienceisYourGreatestAlly.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -124,7 +177,7 @@ def signup():
 def logout():
     session.clear()
     flash("You have been logged out.", "info")
-    return redirect(url_for("login"))
+    return redirect(url_for("home"))
 
 @app.route('/dashboard')
 @login_required
@@ -210,6 +263,44 @@ def profile():
         
     return render_template('dashboard/profile.html', user=user_data)
 
+@app.route('/settings', methods=['GET', 'POST'])
+@login_required
+def settings():
+    if request.method == 'POST':
+        # --- Handle Resetting the background ---
+        if 'reset_background' in request.form:
+            session.pop('background_image', None) # Remove the key from the session
+            flash('Background has been reset to default.', 'success')
+            return redirect(url_for('settings'))
+
+        # --- Handle URL submission ---
+        image_url = request.form.get('backgroundImageUrl')
+        if image_url:
+            session['background_image'] = image_url
+            flash('Background updated successfully!', 'success')
+            return redirect(url_for('settings'))
+
+        # --- Handle File Upload ---
+        if 'backgroundImageFile' in request.files:
+            file = request.files['backgroundImageFile']
+            if file and file.filename != '' and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                
+                # Use the general UPLOAD_FOLDER for backgrounds
+                upload_path = app.config['UPLOAD_FOLDER']
+                if not os.path.exists(upload_path):
+                    os.makedirs(upload_path)
+                
+                file.save(os.path.join(upload_path, filename))
+                session['background_image'] = url_for('static', filename='uploads/' + filename)
+                flash('Background updated successfully!', 'success')
+                return redirect(url_for('settings'))
+            elif file.filename != '':
+                flash('Invalid file type. Please upload an image (png, jpg, gif).', 'danger')
+                return redirect(url_for('settings'))
+
+    return render_template('dashboard/settings.html')
+
 @app.route('/update_profile', methods=['POST'])
 @login_required
 def update_profile():
@@ -278,7 +369,7 @@ def run_analysis():
     except (ValueError, TypeError):
         return jsonify({'error': 'Invalid threshold value provided.'}), 400
 
-    if file and allowed_file(file.filename):
+    if file and '.' in file.filename and file.filename.rsplit('.', 1)[1].lower() == 'csv':
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         
         original_filename = secure_filename(file.filename)

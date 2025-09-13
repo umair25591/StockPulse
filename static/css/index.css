@@ -1,4 +1,3 @@
-/* CSS Reset and Global Styles */
 :root {
     --primary-green: #00E070;
     --dark-bg: #111111;
@@ -23,8 +22,6 @@ body {
     overflow-x: hidden;
 }
 
-/* --- FIXED CSS --- */
-/* Style ONLY for the Spline Viewer Background using its ID */
 #spline-background {
     position: fixed;
     top: 0;

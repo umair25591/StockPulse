@@ -1,12 +1,13 @@
 <header class="main-header">
     <div class="container">
-        <a href="{{ url_for('home') }}" class="logo">Stock Pulse</a>
-        <nav class="main-nav">
+        <a href="{{ url_for('home') }}" class="logo">StockPulse</a>
+
+        <nav class="main-nav" id="main-nav">
             <a href="{{ url_for('home') }}" class="{% if request.endpoint == 'home' %}active{% endif %}">HOME</a>
             <a href="{{ url_for('about') }}" class="{% if request.endpoint == 'about' %}active{% endif %}">ABOUT</a>
             <a href="{{ url_for('blog') }}" class="{% if request.endpoint == 'blog' %}active{% endif %}">BLOG</a>
-
         </nav>
+
         <div class="header-right">
             <a href="{{ url_for('login') }}" class="contact-btn">Login</a>
         </div>

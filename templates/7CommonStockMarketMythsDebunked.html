@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Pulse - 7 Common Stock Market Myths Debunked</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.57/build/spline-viewer.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog-detail.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+</head>
+<body>
+
+    <spline-viewer id="spline-background" url="https://prod.spline.design/BuD8cTwsezQIv0R0/scene.splinecode"></spline-viewer>
+           <header class="main-header">
+        <div class="container">
+            <a href="{{ url_for('home') }}" class="logo logo-design-box"><img src="{{ url_for('static', filename='images/logomain.png') }}" width="95px" alt="Data Science in Stock Market"></a>
+            <nav class="main-nav">
+                <a href="{{ url_for('home') }}" >HOME</a>
+                <a href="{{ url_for('about') }}">ABOUT</a>
+                <a href="{{ url_for('blog') }}" class="active">BLOG</a>
+            </nav>
+            <div class="header-right">
+                <a href="{{ url_for('login') }}" class="contact-btn"><i class="fas fa-user"></i> Login</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="blog-post-section section-padding">
+            <div class="container">
+                <article class="blog-post-content">
+                    
+                    <header class="post-header">
+                        <div class="post-meta">
+                            <span><i class="fas fa-calendar-alt text-green"></i> Oct 20, 2025</span>
+                            <span><i class="fas fa-folder-open text-green"></i> Education</span>
+                            <span><i class="fas fa-user text-green"></i> By Jane Doe</span>
+                        </div>
+                        <h1 class="post-title">Beyond the Hype: 7 Common Stock Market Myths Debunked</h1>
+                        <p class="post-excerpt">Is the stock market just for the rich? Do you need to be a genius to invest? Let's separate fact from fiction and debunk some of the most persistent market myths.</p>
+                    </header>
+                    
+                    <div class="featured-image">
+                        <img src="https://picsum.photos/id/1080/1200/600" alt="Person shattering a glass pane with the word 'Myths' on it">
+                    </div>
+
+                    <div class="post-body">
+                        <p>Misinformation can be costly, especially in the stock market. Let's clear the air by tackling seven common myths.</p>
+                        
+                        <h2>Myth 1: You Need a Lot of Money to Start</h2>
+                        <p><strong>Fact:</strong> Thanks to fractional shares and zero-commission brokers, you can start investing with as little as $1. The key is to start, not how much you start with.</p>
+                        
+                        <h2>Myth 2: Investing is Basically Gambling</h2>
+                        <p><strong>Fact:</strong> Gambling is a zero-sum game based on chance. Investing, when done properly, is about owning a piece of a growing business. It involves risk, but it's based on analysis and economic growth, not random luck.</p>
+
+                        <h2>Myth 3: What Goes Down Must Come Up</h2>
+                        <p><strong>Fact:</strong> While the overall market has historically recovered from downturns, individual stocks can and do go to zero. There is no guarantee a failing company will ever recover.</p>
+
+                        <h2>Myth 4: A Falling Stock is a "Bargain"</h2>
+                        <p><strong>Fact:</strong> A stock is cheap for a reason. It's crucial to understand *why* the price is falling before buying. It could be a temporary overreaction or a sign of fundamental problems. This is where data analysis can help distinguish a true bargain from a "falling knife."</p>
+
+                        <h2>Myth 5: You Have to Be an Expert to Succeed</h2>
+                        <p><strong>Fact:</strong> You don't need a Ph.D. in finance. You need discipline, a willingness to learn, and access to good tools. Tools like StockPulse are designed to level the playing field by providing data-driven insights to everyone.</p>
+
+                        <h2>Myth 6: You Can Reliably "Time the Market"</h2>
+                        <p><strong>Fact:</strong> Consistently buying at the absolute bottom and selling at the absolute top is nearly impossible. A more reliable strategy is "time *in* the market," staying invested for the long term.</p>
+
+                        <h2>Myth 7: Stock Tips from Friends are a Good Idea</h2>
+                        <p><strong>Fact:</strong> Always do your own research. A tip might be well-intentioned, but it's not a substitute for a solid investment thesis based on your own analysis.</p>
+                    </div>
+
+                    <footer class="post-footer">
+                        <div class="tags-container">
+                            <strong>Tags:</strong>
+                            <a href="#">Myths</a>
+                            <a href="#">Investing</a>
+                            <a href="#">Beginners</a>
+                            <a href="#">Education</a>
+                        </div>
+                        <div class="share-container">
+                            <strong>Share:</strong>
+                            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </footer>
+                </article>
+
+                <div class="author-box animate-on-scroll">
+                    <img src="https://i.pravatar.cc/150?img=25" alt="Author Jane Doe">
+                    <div class="author-info">
+                        <h3>About Jane Doe</h3>
+                        <p>Jane is a lead Data Scientist at StockPulse, specializing in time-series analysis and machine learning models for financial markets. She believes in making data science accessible to all investors.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+   <footer class="main-footer">
+        <div class="container">
+            
+            <div class="footer-bottom">
+                <a href="{{ url_for('home') }}">HOME</a>
+                <a href="{{ url_for('about') }}">ABOUT</a>
+                <a href="{{ url_for('blog') }}">BLOG</a>
+               
+            </div>
+        </div>
+    </footer>
+    
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>

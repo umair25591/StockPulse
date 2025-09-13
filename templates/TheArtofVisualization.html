@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Pulse - How Dashboards Turn Data into Actionable Insights</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.57/build/spline-viewer.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog-detail.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+</head>
+<body>
+
+    <spline-viewer id="spline-background" url="https://prod.spline.design/BuD8cTwsezQIv0R0/scene.splinecode"></spline-viewer>
+
+               <header class="main-header">
+        <div class="container">
+            <a href="{{ url_for('home') }}" class="logo logo-design-box"><img src="{{ url_for('static', filename='images/logomain.png') }}" width="95px" alt="Data Science in Stock Market"></a>
+            <nav class="main-nav">
+                <a href="{{ url_for('home') }}" >HOME</a>
+                <a href="{{ url_for('about') }}">ABOUT</a>
+                <a href="{{ url_for('blog') }}" class="active">BLOG</a>
+            </nav>
+            <div class="header-right">
+                <a href="{{ url_for('login') }}" class="contact-btn"><i class="fas fa-user"></i> Login</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="blog-post-section section-padding">
+            <div class="container">
+                <article class="blog-post-content">
+                    
+                    <header class="post-header">
+                        <div class="post-meta">
+                            <span><i class="fas fa-calendar-alt text-green"></i> Oct 02, 2025</span>
+                            <span><i class="fas fa-folder-open text-green"></i> Design & UI</span>
+                            <span><i class="fas fa-user text-green"></i> By Emily Chen</span>
+                        </div>
+                        <h1 class="post-title">The Art of Visualization: How Dashboards Turn Financial Data into Actionable Insights</h1>
+                        <p class="post-excerpt">An algorithm can find an anomaly, but a great dashboard helps you understand it. Explore the importance of data visualization in finance and our approach in StockPulse.</p>
+                    </header>
+                    
+                    <div class="featured-image">
+                        <img src="https://picsum.photos/id/1060/1200/600" alt="Colorful abstract data visualization dashboard">
+                    </div>
+
+                    <div class="post-body">
+                        <p>Data science isn't just about complex models; it's about communication. A model might detect a hundred anomalies, but if the user can't easily understand what, where, and why, the information is useless. This is why data visualization is a critical component of the StockPulse project.</p>
+                        
+                        <h2>Why is Visualization so Important?</h2>
+                        <p>The human brain is wired to process visual information far more efficiently than raw numbers in a spreadsheet. A well-designed chart can reveal trends, outliers, and patterns in an instant. In the fast-paced world of finance, this speed of comprehension is a significant advantage.</p>
+                        
+                        <blockquote>
+                            "The greatest value of a picture is when it forces us to notice what we never expected to see." - John Tukey
+                        </blockquote>
+
+                        <h2>Key Elements of an Effective Financial Dashboard</h2>
+                        <p>As per our SRS, StockPulse will feature an interactive dashboard. Here's what makes a financial dashboard truly effective:</p>
+                        <ul>
+                            <li><strong>Clarity:</strong> It should present the most important information upfront without clutter. Key metrics should be immediately visible.</li>
+                            <li><strong>Context:</strong> A chart showing a price spike is good. A chart that also shows the moving average, volume, and highlights the anomalous point is great. Context is everything.</li>
+                            <li><strong>Interactivity:</strong> Users should be able to zoom in on timeframes, hover over points to get more details, and filter the data. This turns a static report into a dynamic analysis tool.</li>
+                        </ul>
+
+                        <div class="image-in-post">
+                            <img src="https://picsum.photos/id/312/800/400" alt="Person interacting with a large touch-screen data dashboard">
+                            <figcaption>Interactive dashboards empower users to explore the data for themselves.</figcaption>
+                        </div>
+
+                        <p>Tools like Tableau, or libraries like Matplotlib and Seaborn, allow us to build these rich, interactive experiences. Our goal for StockPulse is not just to provide answers, but to provide a tool that helps users ask better questions and explore the financial markets with confidence.</p>
+                    </div>
+
+                    <footer class="post-footer">
+                        <div class="tags-container">
+                            <strong>Tags:</strong>
+                            <a href="#">Data Visualization</a>
+                            <a href="#">Dashboard</a>
+                            <a href="#">UI/UX</a>
+                            <a href="#">Tableau</a>
+                        </div>
+                        <div class="share-container">
+                            <strong>Share:</strong>
+                            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </footer>
+                </article>
+
+                <div class="author-box animate-on-scroll">
+                    <img src="https://i.pravatar.cc/150?img=47" alt="Author Emily Chen">
+                    <div class="author-info">
+                        <h3>About Emily Chen</h3>
+                        <p>Emily is the Lead UI/UX Designer for StockPulse. With a background in both graphic design and data analysis, she specializes in creating intuitive interfaces that make complex data beautiful and easy to understand.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+ <footer class="main-footer">
+        <div class="container">
+            
+            <div class="footer-bottom">
+                <a href="{{ url_for('home') }}">HOME</a>
+                <a href="{{ url_for('about') }}">ABOUT</a>
+                <a href="{{ url_for('blog') }}">BLOG</a>
+               
+            </div>
+        </div>
+    </footer>
+    
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>

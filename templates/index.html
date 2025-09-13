@@ -3,32 +3,52 @@
 <head>
     <meta charset="UTF--8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glint - Creative Portfolio Template</title>
+    <title>StockPulse - Home</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.57/build/spline-viewer.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
 </head>
+<style>
+    .logo-design-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
 <body>
 
     <spline-viewer id="spline-background" url="https://prod.spline.design/BuD8cTwsezQIv0R0/scene.splinecode"></spline-viewer>
 
-    {% include "partials/landing-header.html" %}
+    <header class="main-header">
+        <div class="container">
+            <a href="{{ url_for('home') }}" class="logo logo-design-box"><img src="{{ url_for('static', filename='images/logomain.png') }}" width="95px" alt="Data Science in Stock Market"></a>
+            <nav class="main-nav">
+                <a href="{{ url_for('home') }}" class="active">HOME</a>
+                <a href="{{ url_for('about') }}">ABOUT</a>
+                <a href="{{ url_for('blog') }}">BLOG</a>
+            </nav>
+            <div class="header-right">
+                <a href="{{ url_for('login') }}" class="contact-btn"><i class="fas fa-user"></i> Login</a>
+            </div>
+        </div>
+    </header>
 
     <main>
         <section class="hero">
             <div class="container grid">
                 <div class="hero-text">
                     <h1 class="animate-on-scroll">
-                        <span class="text-green">IMAGINATION</span> IS MORE IMPORTANT THAN <span class="text-green">KNOWLEDGE</span>
+                        <span class="text-green">INTELLIGENT</span> INSIGHTS, SMARTER <span class="text-green">INVESTING</span>
                     </h1>
-                    <p class="animate-on-scroll">Together we the people achieve more than any single person could ever do alone.</p>
-                    <a href="#" class="btn animate-on-scroll">GETTING STARTED</a>
+                    <p class="animate-on-scroll">Leverage our AI-powered analytics and real-time data to navigate the markets with confidence.</p>
+                    <a href="#features" class="btn animate-on-scroll">GETTING STARTED</a>
                 </div>
-                <div class="hero-image animate-on-scroll">
-                     <!-- <spline-viewer url="https://prod.spline.design/uDXFxBsbRoDyj8UI/scene.splinecode"></spline-viewer> -->
+                <div class="about-image animate-on-scroll">
+                    <img src="{{ url_for('static', filename='images/logomain.png') }}" style="max-width: 75%;" alt="Data Science in Stock Market">
                 </div>
             </div>
         </section>
@@ -36,163 +56,129 @@
         <section class="about section-padding">
             <div class="container grid">
                 <div class="about-image animate-on-scroll">
-                    <img src="https://i.imgur.com/yVqX9qf.png" alt="Man with laptop" style="max-width: 100%;">
+                    <img src="{{ url_for('static', filename='images/main.png') }}" style="width: 100%;" alt="Data Science in Stock Market">
                 </div>
                 <div class="about-text">
-                    <h2 class="animate-on-scroll">FAILURE IS THE CONDIMENT THAT GIVES <span class="text-green">SUCCESS</span></h2>
-                    <p class="animate-on-scroll">Spend more time focusing on the important aspects of your business. Turn to McCartney HR LLC in Brooklyn, NY for HR solutions. As an advanced virtual HR company, we are offering online HR systems that can be customized depending on your business needs.</p>
-                    <a href="#" class="btn btn-download animate-on-scroll"><i class="fas fa-download"></i> DOWNLOAD CV</a>
+                    <h2 class="animate-on-scroll">UNLOCK YOUR TRADING <span class="text-green">POTENTIAL</span></h2>
+                    <p class="animate-on-scroll">StockPulse is a comprehensive analytics platform designed for modern investors. We provide the tools and insights you need to make informed, data-driven decisions, from tracking portfolios to identifying market trends before they happen.</p>
+                    <a href="{{ url_for('about') }}" class="btn btn-download animate-on-scroll"><i class="fas fa-info-circle"></i> LEARN MORE</a>
                 </div>
             </div>
         </section>
 
         <section class="experience section-padding">
             <div class="container">
-                <p class="section-title animate-on-scroll">MY EXPERIENCE</p>
-                <h2 class="animate-on-scroll">EXPERIENCE AND SKILL</h2>
-                <p class="animate-on-scroll">Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Sint Ratione Reprehenderit. Eum Qui Eum Sit Ea Provident.</p>
+                <p class="section-title animate-on-scroll">OUR TECHNOLOGY</p>
+                <h2 class="animate-on-scroll">PLATFORM FEATURES & CAPABILITIES</h2>
+                <p class="animate-on-scroll">Our platform is built on a foundation of cutting-edge technology to give you a competitive edge.</p>
                 
                 <div class="grid">
                     <div class="exp-item animate-on-scroll">
-                        <span>2011 - 2014 | SR DESIGNER</span>
-                        <h4>GOOGLE CORPORATION</h4>
-                        <p>All You Need To Do Your Best Work Together In One Package Works Seamlessly Computer</p>
+                        <span>REAL-TIME ANALYSIS</span>
+                        <h4>LIVE MARKET DATA</h4>
+                        <p>Access up-to-the-second market data, news, and analytics across thousands of global assets.</p>
                     </div>
                     <div class="exp-item animate-on-scroll">
-                        <span>2011 - 2014 | SR DESIGNER</span>
-                        <h4>APPLE PRODUCT CO.</h4>
-                        <p>All You Need To Do Your Best Work Together In One Package Works Seamlessly Computer</p>
+                        <span>PREDICTIVE MODELS</span>
+                        <h4>AI-POWERED SIGNALS</h4>
+                        <p>Utilize our machine learning algorithms to identify potential trading signals and market shifts.</p>
                     </div>
                     <div class="exp-item animate-on-scroll">
-                        <span>2011 - 2014 | SR DESIGNER</span>
-                        <h4>LEAD DESIGNER WORDCRAFT</h4>
-                        <p>All You Need To Do Your Best Work Together In One Package Works Seamlessly Computer</p>
+                        <span>PORTFOLIO MANAGEMENT</span>
+                        <h4>ADVANCED TRACKING</h4>
+                        <p>Monitor your investments with our intuitive portfolio tracker and performance visualization tools.</p>
                     </div>
                     <div class="exp-item animate-on-scroll">
-                        <span>2011 - 2014 | SR DESIGNER</span>
-                        <h4>LUBRINO MARS AS</h4>
-                        <p>All You Need To Do Your Best Work Together In One Package Works Seamlessly Computer</p>
+                        <span>MARKET SENTIMENT</span>
+                        <h4>SOCIAL TREND ANALYSIS</h4>
+                        <p>Gauge market sentiment by analyzing social media trends and news headlines in real-time.</p>
                     </div>
                 </div>
 
                 <div class="skills-grid grid animate-on-scroll">
                     <div class="skill-item">
-                        <div class="skill-circle" data-percent="60">
+                        <div class="skill-circle" data-percent="95">
                             <span class="skill-percent">0%</span>
                         </div>
-                        <h3>BRANDING DESIGN</h3>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-circle" data-percent="70">
-                            <span class="skill-percent">0%</span>
-                        </div>
-                        <h3>UI & UX DESIGN</h3>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-circle" data-percent="30">
-                            <span class="skill-percent">0%</span>
-                        </div>
-                        <h3>WEB DESIGN</h3>
+                        <h3>QUANTITATIVE ANALYSIS</h3>
                     </div>
                     <div class="skill-item">
                         <div class="skill-circle" data-percent="90">
                             <span class="skill-percent">0%</span>
                         </div>
-                        <h3>ILLUSTRATION</h3>
+                        <h3>MACHINE LEARNING</h3>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-circle" data-percent="85">
+                            <span class="skill-percent">0%</span>
+                        </div>
+                        <h3>DATA VISUALIZATION</h3>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-circle" data-percent="100">
+                            <span class="skill-percent">0%</span>
+                        </div>
+                        <h3>PLATFORM SECURITY</h3>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="services section-padding">
+        <section id="features" class="services section-padding">
             <div class="container">
-                <p class="section-title animate-on-scroll">WHAT WE DO</p>
-                <h2 class="animate-on-scroll">SERVICES AND SOLUTIONS</h2>
-                <p class="animate-on-scroll">Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Sint Ratione Reprehenderit. Eum Qui Eum Sit Ea Provident.</p>
+                <p class="section-title animate-on-scroll">WHAT WE OFFER</p>
+                <h2 class="animate-on-scroll">TOOLS FOR EVERY INVESTOR</h2>
+                <p class="animate-on-scroll">From beginner to expert, our suite of tools is designed to enhance your trading strategy.</p>
                 
                 <div class="grid">
                     <div class="service-card animate-on-scroll">
-                        <i class="fas fa-drafting-compass"></i>
-                        <h3>DESIGN PRINCIPALS</h3>
-                        <p>Need A Project Concreted By An Expert? Let's Go! Access A Human Resources Consultant To Answer Questions</p>
+                        <i class="fas fa-chart-line"></i>
+                        <h3>ADVANCED CHARTING</h3>
+                        <p>Utilize a full suite of technical indicators and drawing tools to perform in-depth market analysis.</p>
                     </div>
                     <div class="service-card animate-on-scroll">
-                        <i class="far fa-gem"></i>
-                        <h3>UNIQUE VALUES</h3>
-                        <p>Need A Project Concreted By An Expert? Let's Go! Access A Human Resources Consultant To Answer Questions</p>
+                        <i class="fas fa-robot"></i>
+                        <h3>AI PREDICTIVE ANALYTICS</h3>
+                        <p>Leverage our proprietary AI to get predictive insights on stock performance and market trends.</p>
                     </div>
                     <div class="service-card animate-on-scroll">
-                        <i class="fas fa-layer-group"></i>
-                        <h3>STYLE COMPONENTS</h3>
-                        <p>Need A Project Concreted By An Expert? Let's Go! Access A Human Resources Consultant To Answer Questions</p>
+                        <i class="fas fa-tachometer-alt"></i>
+                        <h3>CUSTOM DASHBOARDS</h3>
+                        <p>Tailor your dashboard with the metrics, watchlists, and charts that matter most to you.</p>
                     </div>
                 </div>
             </div>
         </section>
         
-   
-            <div class="container section-padding">
-                 <div class="section-header">
-                    <div class="section-header-text animate-on-scroll">
-                        <p class="section-title">TESTIMONIALS</p>
-                        <h2>HAPPY CLIENTS TO SAYS</h2>
-                        <p>Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Sint Ratione Reprehenderit.</p>
-                    </div>
-                    <div class="section-nav-arrows animate-on-scroll">
-                        <i class="fas fa-arrow-left"></i>
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
+        <div class="container section-padding">
+             <div class="section-header">
+                <div class="section-header-text animate-on-scroll">
+                    <p class="section-title">TESTIMONIALS</p>
+                    <h2>WHAT OUR USERS SAY</h2>
+                    <p>Thousands of investors trust StockPulse to guide their financial decisions.</p>
                 </div>
-                <div class="testimonial-box animate-on-scroll" style="text-align: center; padding: 30px;">
-                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                    <p class="quote-text">GILROY IS A GREAT AND SUPER-PROFESSIONAL SERVICE PROVIDER, WHICH BROUGHT NEW TECHNOLOGIES, NEW METHODOLOGY, AND A FRESH PERSPECTIVE TO OUR PROJECT.</p>
-                    <div class="client-info">
-                        <img src="https://i.imgur.com/GprO3kI.jpg" alt="Jack Halplyp">
-                        <p>Jack Halplyp, Shina, NYC USA</p>
-                    </div>
+                <div class="section-nav-arrows animate-on-scroll">
+                    <i class="fas fa-arrow-left"></i>
+                    <i class="fas fa-arrow-right"></i>
                 </div>
             </div>
+            <div class="testimonial-box animate-on-scroll" style="text-align: center; padding: 30px;">
+                <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                <p class="quote-text">STOCKPULSE HAS COMPLETELY CHANGED HOW I APPROACH TRADING. THE AI-POWERED INSIGHTS ARE A GAME-CHANGER, GIVING ME THE CONFIDENCE TO MAKE BOLDER MOVES.</p>
+                <div class="client-info">
+                    <img src="https://i.imgur.com/GprO3kI.jpg" alt="Mark Chen">
+                    <p>Mark Chen, Active Trader</p>
+                </div>
+            </div>
+        </div>
         
-        <section class="pricing section-padding">
-            <div class="container">
-                 <div class="section-header animate-on-scroll">
-                    <div class="section-header-text">
-                        <p class="section-title">SPECIFICATIONS</p>
-                        <h2>ALL OUR PAYMENT OPTIONS</h2>
-                        <p>Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Sint Ratione Reprehenderit.</p>
-                    </div>
-                </div>
-                <div class="grid">
-                    <div class="pricing-card animate-on-scroll">
-                        <h4>INFLUENCER</h4>
-                        <span>Ideal for Small Investors</span>
-                        <div class="price">$104</div>
-                        <div class="per-month">Per Month</div>
-                        <a href="#" class="btn">READ MORE</a>
-                    </div>
-                    <div class="pricing-card highlighted animate-on-scroll">
-                        <h4>AGENCY</h4>
-                        <span>Ideal for Small Investors</span>
-                        <div class="price">$204</div>
-                        <div class="per-month">Per Month</div>
-                        <a href="#" class="btn">READ MORE</a>
-                    </div>
-                    <div class="pricing-card animate-on-scroll">
-                        <h4>ENTERPRISE</h4>
-                        <span>Ideal for Small Investors</span>
-                        <div class="price">LET'S CHART</div>
-                        <div class="per-month">&nbsp;</div>
-                        <a href="#" class="btn">READ MORE</a>
-                    </div>
-                </div>
-            </div>
-        </section>
+      
 
         <section class="newsletter section-padding">
             <div class="container">
-                <h2 class="animate-on-scroll">STAY UP TO DATE, SUBSCRIBE TO THE FREE NEWSLETTER !</h2>
+                <h2 class="animate-on-scroll">GET MARKET INSIGHTS DELIVERED TO YOUR INBOX!</h2>
                 <form class="newsletter-form animate-on-scroll">
-                    <input type="email" placeholder="to enter your email...">
+                    <input type="email" placeholder="Enter your email...">
                     <button type="submit" class="btn">SUBSCRIBE</button>
                 </form>
             </div>
@@ -201,18 +187,12 @@
 
     <footer class="main-footer">
         <div class="container">
-            <div class="sponsors">
-                <img src="https://i.imgur.com/uR1Y61R.png" alt="Melrose">
-                <img src="https://i.imgur.com/Y1Z54oH.png" alt="Market Trade">
-                <img src="https://i.imgur.com/4g0b73Q.png" alt="Block Woody">
-                <img src="https://i.imgur.com/vHqjA9U.png" alt="Market Runner">
-            </div>
+            
             <div class="footer-bottom">
-                <a href="#">ABOUT ME</a>
-                <a href="#">CAREER</a>
-                <a href="#">BLOG</a>
-                <a href="#">GALLERY</a>
-                <a href="#">CONTACT ME</a>
+                <a href="{{ url_for('home') }}">HOME</a>
+                <a href="{{ url_for('about') }}">ABOUT</a>
+                <a href="{{ url_for('blog') }}">BLOG</a>
+               
             </div>
         </div>
     </footer>

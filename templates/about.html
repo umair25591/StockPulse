@@ -3,31 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - Glint</title>
+    <title>About Us - StockPulse</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.57/build/spline-viewer.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+    <style>
+        .team-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            text-align: center;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .team-card:hover {
+            transform: translateY(-10px);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .team-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            border: 4px solid var(--green);
+        }
+        .team-card h3 {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+        .team-card p {
+            color: var(--green);
+            font-weight: 500;
+        }
+    </style>
 </head>
 <body>
 
     <spline-viewer id="spline-background" url="https://prod.spline.design/BuD8cTwsezQIv0R0/scene.splinecode"></spline-viewer>
 
-    {% include "partials/landing-header.html" %}
+       <header class="main-header">
+        <div class="container">
+            <a href="{{ url_for('home') }}" class="logo logo-design-box"><img src="{{ url_for('static', filename='images/logomain.png') }}" width="95px" alt="Data Science in Stock Market"></a>
+            <nav class="main-nav">
+                <a href="{{ url_for('home') }}">HOME</a>
+                <a href="{{ url_for('about') }}" class="active">ABOUT</a>
+                <a href="{{ url_for('blog') }}">BLOG</a>
+            </nav>
+            <div class="header-right">
+                <a href="{{ url_for('login') }}" class="contact-btn"><i class="fas fa-user"></i> Login</a>
+            </div>
+        </div>
+    </header>
 
     <main>
         <section class="hero">
             <div class="container" style="text-align: center;">
                 <h1 class="animate-on-scroll">
-                    DRIVEN BY <span class="text-green">CURIOSITY</span>,
+                    DEMOCRATIZING FINANCIAL
                     <br>
-                    DEFINED BY <span class="text-green">RESULTS</span>.
+                    DATA FOR <span class="text-green">EVERYONE</span>.
                 </h1>
                 <p class="animate-on-scroll" style="max-width: 700px; margin: 20px auto 0;">
-                    Glint was founded on a simple belief: that technology and human ingenuity can solve the most complex challenges. We are a team of strategists, creators, and innovators dedicated to pushing boundaries and delivering excellence.
+                    StockPulse was founded by a team of traders and technologists who believed that powerful financial tools shouldn't be reserved for Wall Street. Our mission is to level the playing field for all investors.
                 </p>
             </div>
         </section>
@@ -36,28 +77,28 @@
             <div class="container">
                 <p class="section-title animate-on-scroll">OUR PRINCIPLES</p>
                 <h2 class="animate-on-scroll">Our Core <span class="text-green">Values</span></h2>
-                <p class="animate-on-scroll">The principles that guide every decision we make.</p>
+                <p class="animate-on-scroll">The principles that guide our platform and company.</p>
                 
                 <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
                     <div class="service-card animate-on-scroll">
                         <i class="fas fa-lightbulb"></i>
                         <h3>Innovation</h3>
-                        <p>We constantly seek better ways to solve problems, embracing creativity and experimentation.</p>
+                        <p>We are committed to leveraging the latest in AI and data science to keep our users ahead of the curve.</p>
                     </div>
                     <div class="service-card animate-on-scroll">
                         <i class="fas fa-shield-alt"></i>
                         <h3>Integrity</h3>
-                        <p>We operate with transparency and honesty, building trust through every interaction.</p>
+                        <p>We prioritize data accuracy, platform security, and transparency in everything we do.</p>
                     </div>
                     <div class="service-card animate-on-scroll">
                         <i class="fas fa-users"></i>
-                        <h3>Collaboration</h3>
-                        <p>We believe the best results come from working together with our clients and each other.</p>
+                        <h3>User-Centricity</h3>
+                        <p>Our users are at the heart of our development process. We build tools that solve real-world trading challenges.</p>
                     </div>
                      <div class="service-card animate-on-scroll">
                         <i class="far fa-gem"></i>
                         <h3>Excellence</h3>
-                        <p>We set the highest standards for our work, striving for quality and impact in everything we do.</p>
+                        <p>We set the highest standards for performance, reliability, and user experience.</p>
                     </div>
                 </div>
             </div>
@@ -66,12 +107,12 @@
         <section class="about section-padding">
             <div class="container grid">
                  <div class="about-text">
-                    <h2 class="animate-on-scroll">From a Simple Idea to a <span class="text-green">Market Leader</span></h2>
-                    <p class="animate-on-scroll">From our beginnings, Glint has grown into a powerhouse for digital transformation and HR solutions. We saw a gap in the market for a firm that wasn't just a vendor, but a true partner in growth.</p>
-                    <p class="animate-on-scroll">Our journey has been one of relentless learning and adaptation. We embrace failure as a stepping stone to success, allowing us to deliver robust, future-proof solutions that empower our clients to thrive in an ever-changing landscape.</p>
+                    <h2 class="animate-on-scroll">From a Trading Desk to a <span class="text-green">Global Platform</span></h2>
+                    <p class="animate-on-scroll">StockPulse began as an internal tool used by our founders to analyze market data more effectively. We quickly realized that the insights we were generating could benefit a much wider audience of retail investors and traders.</p>
+                    <p class="animate-on-scroll">Today, StockPulse has grown into a global platform serving thousands of users. Our journey has been driven by a relentless focus on data quality and a passion for building intuitive, powerful tools that make sophisticated market analysis accessible to all.</p>
                 </div>
                 <div class="about-image animate-on-scroll">
-                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600" alt="Team collaborating" style="max-width: 100%; border-radius: 8px;">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600" alt="Team collaborating on data charts" style="max-width: 100%; border-radius: 8px;">
                 </div>
             </div>
         </section>
@@ -80,7 +121,7 @@
             <div class="container">
                 <p class="section-title animate-on-scroll">OUR TEAM</p>
                 <h2 class="animate-on-scroll">Meet The <span class="text-green">Leadership</span></h2>
-                <p class="animate-on-scroll">The brilliant minds guiding our mission forward.</p>
+                <p class="animate-on-scroll">A blend of financial expertise and technological innovation.</p>
                 
                 <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
                     <div class="team-card animate-on-scroll">
@@ -94,9 +135,9 @@
                         <p>Chief Technology Officer</p>
                     </div>
                     <div class="team-card animate-on-scroll">
-                        <img src="https://placehold.co/200x200/FFFFFF/111111?text=EW" alt="Emily Wang, Head of Design">
+                        <img src="https://placehold.co/200x200/FFFFFF/111111?text=EW" alt="Emily Wang, Head of Quantitative Research">
                         <h3>Emily Wang</h3>
-                        <p>Head of Design</p>
+                        <p>Head of Quantitative Research</p>
                     </div>
                 </div>
             </div>
@@ -104,9 +145,9 @@
 
         <section class="newsletter section-padding">
             <div class="container">
-                <h2 class="animate-on-scroll">Ready to build the future with us?</h2>
-                <p class="animate-on-scroll" style="margin-top: 1rem; margin-bottom: 2rem;">Let's connect and discuss how our imagination can fuel your success.</p>
-                <a href="#" class="btn animate-on-scroll">Get In Touch</a>
+                <h2 class="animate-on-scroll">Ready to elevate your trading strategy?</h2>
+                <p class="animate-on-scroll" style="margin-top: 1rem; margin-bottom: 2rem;">Join thousands of users who are making smarter, data-driven decisions with StockPulse.</p>
+                <a href="{{ url_for('login') }}" class="btn animate-on-scroll">Get Started for Free</a>
             </div>
         </section>
 
@@ -114,18 +155,12 @@
 
     <footer class="main-footer">
         <div class="container">
-            <div class="sponsors">
-                <img src="https://i.imgur.com/uR1Y61R.png" alt="Melrose">
-                <img src="https://i.imgur.com/Y1Z54oH.png" alt="Market Trade">
-                <img src="https://i.imgur.com/4g0b73Q.png" alt="Block Woody">
-                <img src="https://i.imgur.com/vHqjA9U.png" alt="Market Runner">
-            </div>
+            
             <div class="footer-bottom">
-                <a href="#">ABOUT ME</a>
-                <a href="#">CAREER</a>
-                <a href="#">BLOG</a>
-                <a href="#">GALLERY</a>
-                <a href="#">CONTACT ME</a>
+                <a href="{{ url_for('home') }}">HOME</a>
+                <a href="{{ url_for('about') }}">ABOUT</a>
+                <a href="{{ url_for('blog') }}">BLOG</a>
+               
             </div>
         </div>
     </footer>

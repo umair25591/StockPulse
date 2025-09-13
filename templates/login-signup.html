@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Green & Black Login</title>
+    <title>Stock Pulse - Login/Signup</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
@@ -14,91 +14,80 @@
 
 <body>
 
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.57/build/spline-viewer.js"></script>
-
-
-    <!-- <spline-viewer url="https://prod.spline.design/0OLxvVg2LzEMszlG/scene.splinecode"></spline-viewer> -->
-
     <div class="container">
-        <div class="info-side ">
-            <div class="info-box">
-                <div class="content-container info-container">
-                    <h1>Welcome To <span>Our Community</span></h1>
-                    <p>Securely access your account and explore a world of possibilities.</p>
+        <div class="form-container-main">
+
+            <div class="info-section">
+                <div class="info-content">
+                    <h1>Welcome Back!</h1>
+                    <p>To keep connected with us please login with your personal info.</p>
+                    <button id="show-signup-btn" class="switch-btn">Sign Up</button>
+                </div>
+                <div class="info-content">
+                    <h1>Hello, Friend!</h1>
+                    <p>Enter your personal details and start your journey with us.</p>
+                    <button id="show-login-btn" class="switch-btn">Sign In</button>
                 </div>
             </div>
-        </div>
-        <div class="form-side ">
-            <div class="animated-box login-box glass-effect">
-                <div class="content-container form-container ">
-                    <div class="form-wrapper">
 
-                        <form id="login-form" method="POST" action="{{ url_for('login') }}">
-                            <h2>User <span>Login</span></h2>
-                            <div class="input-box">
-                                <input type="email" name="email" required="required">
-                                <label>Email Address</label>
-                                <i></i>
-                            </div>
-                            <div class="input-box">
-                                <input type="password" name="password" required="required">
-                                <label>Password</label>
-                                <i></i>
-                            </div>
-                            <div class="links">
-                                <a href="#">Forgot Password?</a>
-                                <a href="#" id="show-signup">Sign Up</a>
-                            </div>
-                            <button type="submit" class="submit-btn">LOGIN</button>
-                        </form>
+            <div class="form-section-wrapper">
+                <div class="form-slider">
+                    <form id="login-form" method="POST" action="{{ url_for('login') }}">
+                        <h2>User <span>Login</span></h2>
+                        <div class="input-box">
+                            <input type="email" name="email" required="required" autocomplete="email">
+                            <label>Email Address</label>
+                        </div>
+                        <div class="input-box">
+                            <input type="password" name="password" required="required" autocomplete="current-password">
+                            <label>Password</label>
+                        </div>
+                        <div class="links">
+                            <a href="#">Forgot Password?</a>
+                        </div>
+                        <button type="submit" class="submit-btn">LOGIN</button>
+                    </form>
 
-                        <form id="signup-form" method="POST" action="{{ url_for('signup') }}"
-                            enctype="multipart/form-data">
-                            <h2>Create <span>Account</span></h2>
-
+                    <form id="signup-form" method="POST" action="{{ url_for('signup') }}"
+                        enctype="multipart/form-data">
+                        <h2>Create <span>Account</span></h2>
+                        <div class="profile-picture-container">
+                            <label for="profile_picture" class="profile-picture-label">
+                                <img src="https://api.dicebear.com/7.x/initials/svg?seed=?" alt="Profile Preview" id="image-preview">
+                                <div class="upload-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                </div>
+                            </label>
+                            <input type="file" name="profile_picture" id="profile_picture" accept="image/*" required="required" style="display: none;">
+                        </div>
+                        <div class="name-fields">
                             <div class="input-box">
-                                <input type="text" name="first_name" required="required">
+                                <input type="text" name="first_name" required="required" autocomplete="given-name">
                                 <label>First Name</label>
-                                <i></i>
                             </div>
                             <div class="input-box">
-                                <input type="text" name="last_name" required="required">
+                                <input type="text" name="last_name" required="required" autocomplete="family-name">
                                 <label>Last Name</label>
-                                <i></i>
                             </div>
-                            <div class="input-box">
-                                <input type="email" name="email" required="required">
-                                <label>Email Address</label>
-                                <i></i>
-                            </div>
-                            <div class="input-box">
-                                <input type="password" name="password" required="required">
-                                <label>Password</label>
-                                <i></i>
-                            </div>
-                            <div class="input-box">
-                                <input type="text" name="role" required="required">
-                                <label>Role (e.g., Developer, Analyst)</label>
-                                <i></i>
-                            </div>
-                            <div class="input-box">
-                                <input type="text" name="address" required="required">
-                                <label>Home Address</label>
-                                <i></i>
-                            </div>
-                            <div class="input-box">
-                                <input type="file" name="profile_picture" accept="image/*" required="required">
-                                <label style="top: -20px;">Profile Picture</label>
-                                <i></i>
-                            </div>
-
-                            <div class="links">
-                                <a href="#" id="show-login">Back to Login</a>
-                            </div>
-                            <button type="submit" class="submit-btn">SIGN UP</button>
-                        </form>
-
-                    </div>
+                        </div>
+                        <div class="input-box">
+                            <input type="email" name="email" required="required" autocomplete="email">
+                            <label>Email Address</label>
+                        </div>
+                        <div class="input-box">
+                            <input type="password" name="password" required="required" autocomplete="new-password">
+                            <label>Password</label>
+                        </div>
+                        <div class="input-box">
+                            <input type="text" name="role" required="required" autocomplete="organization-title">
+                            <label>Role (e.g., Developer)</label>
+                        </div>
+                        <div class="input-box">
+                            <input type="text" name="address" required="required" autocomplete="street-address">
+                            <label>Home Address</label>
+                        </div>
+                        <button type="submit" class="submit-btn">SIGN UP</button>
+                    </form>
                 </div>
             </div>
         </div>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Pulse - A Visual Guide to Reading Stock Charts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.57/build/spline-viewer.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog-detail.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+</head>
+<body>
+
+    <spline-viewer id="spline-background" url="https://prod.spline.design/BuD8cTwsezQIv0R0/scene.splinecode"></spline-viewer>
+
+           <header class="main-header">
+        <div class="container">
+            <a href="{{ url_for('home') }}" class="logo logo-design-box"><img src="{{ url_for('static', filename='images/logomain.png') }}" width="95px" alt="Data Science in Stock Market"></a>
+            <nav class="main-nav">
+                <a href="{{ url_for('home') }}" >HOME</a>
+                <a href="{{ url_for('about') }}">ABOUT</a>
+                <a href="{{ url_for('blog') }}" class="active">BLOG</a>
+            </nav>
+            <div class="header-right">
+                <a href="{{ url_for('login') }}" class="contact-btn"><i class="fas fa-user"></i> Login</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="blog-post-section section-padding">
+            <div class="container">
+                <article class="blog-post-content">
+                    
+                    <header class="post-header">
+                        <div class="post-meta">
+                            <span><i class="fas fa-calendar-alt text-green"></i> Oct 10, 2025</span>
+                            <span><i class="fas fa-folder-open text-green"></i> Technical Analysis</span>
+                            <span><i class="fas fa-user text-green"></i> By Maria Rodriguez</span>
+                        </div>
+                        <h1 class="post-title">Decoding the Candlesticks: A Visual Guide to Reading Stock Charts</h1>
+                        <p class="post-excerpt">Those little red and green bars on a stock chart are packed with information. Learn how to read candlestick charts to understand market sentiment at a glance.</p>
+                    </header>
+                    
+                    <div class="featured-image">
+                        <img src="https://picsum.photos/id/326/1200/600" alt="Close-up of a digital candlestick stock chart">
+                    </div>
+
+                    <div class="post-body">
+                        <p>For any trader, a candlestick chart is a fundamental tool. Each "candle" represents a specific time period (like a day or an hour) and tells a story about the battle between buyers (bulls) and sellers (bears) during that time.</p>
+                        
+                        <h2>The Anatomy of a Candlestick</h2>
+                        <p>Every candlestick has four key data points:</p>
+                        <ul>
+                            <li><strong>The Open:</strong> The price at the start of the period.</li>
+                            <li><strong>The Close:</strong> The price at the end of the period.</li>
+                            <li><strong>The High:</strong> The highest price reached during the period.</li>
+                            <li><strong>The Low:</strong> The lowest price reached during the period.</li>
+                        </ul>
+                        <p>The main rectangular part is called the "real body." The lines extending above and below are the "wicks" or "shadows."</p>
+
+                        <div class="image-in-post">
+                            <img src="https://i.imgur.com/B9h5J1U.png" alt="Diagram showing the anatomy of a bullish and bearish candlestick">
+                            <figcaption>A green (bullish) candle means the close was higher than the open. A red (bearish) candle means the opposite.</figcaption>
+                        </div>
+                        
+                        <h2>What Do They Tell Us?</h2>
+                        <p>The size and shape of the body and wicks reveal a lot about market sentiment. A long green body suggests strong buying pressure. A long wick on top of a small body suggests that buyers tried to push the price up, but sellers pushed it back down, indicating potential resistance.</p>
+
+                        <blockquote>
+                            "Technical analysis is a skill that improves with experience and study. Always be a student and keep learning." - John Murphy
+                        </blockquote>
+                        
+                        <p>By learning to recognize common patterns like "Doji," "Hammer," or "Engulfing" patterns, traders can gain valuable insights into potential trend reversals or continuations. While StockPulse uses advanced algorithms, a solid understanding of these basics is crucial for interpreting our tool's findings effectively.</p>
+                    </div>
+
+                    <footer class="post-footer">
+                        <div class="tags-container">
+                            <strong>Tags:</strong>
+                            <a href="#">Candlestick Charts</a>
+                            <a href="#">Technical Analysis</a>
+                            <a href="#">Trading</a>
+                            <a href="#">Beginners</a>
+                        </div>
+                        <div class="share-container">
+                            <strong>Share:</strong>
+                            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </footer>
+                </article>
+
+                <div class="author-box animate-on-scroll">
+                    <img src="https://i.pravatar.cc/150?img=35" alt="Author Maria Rodriguez">
+                    <div class="author-info">
+                        <h3>About Maria Rodriguez</h3>
+                        <p>Maria is a certified technical analyst and trading coach. She focuses on teaching visual chart analysis and helps traders of all levels develop their skills. She is a contributing writer for StockPulse's educational content.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            
+            <div class="footer-bottom">
+                <a href="{{ url_for('home') }}">HOME</a>
+                <a href="{{ url_for('about') }}">ABOUT</a>
+                <a href="{{ url_for('blog') }}">BLOG</a>
+               
+            </div>
+        </div>
+    </footer>
+    
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Pulse - Isolation Forest vs. SVM for Anomaly Detection</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.57/build/spline-viewer.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog-detail.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+</head>
+<body>
+
+    <spline-viewer id="spline-background" url="https://prod.spline.design/BuD8cTwsezQIv0R0/scene.splinecode"></spline-viewer>
+
+            <header class="main-header">
+        <div class="container">
+            <a href="{{ url_for('home') }}" class="logo logo-design-box"><img src="{{ url_for('static', filename='images/logomain.png') }}" width="95px" alt="Data Science in Stock Market"></a>
+            <nav class="main-nav">
+                <a href="{{ url_for('home') }}" >HOME</a>
+                <a href="{{ url_for('about') }}">ABOUT</a>
+                <a href="{{ url_for('blog') }}" class="active">BLOG</a>
+            </nav>
+            <div class="header-right">
+                <a href="{{ url_for('login') }}" class="contact-btn"><i class="fas fa-user"></i> Login</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="blog-post-section section-padding">
+            <div class="container">
+                <article class="blog-post-content">
+                    
+                    <header class="post-header">
+                        <div class="post-meta">
+                            <span><i class="fas fa-calendar-alt text-green"></i> Sep 29, 2025</span>
+                            <span><i class="fas fa-folder-open text-green"></i> Algorithms</span>
+                            <span><i class="fas fa-user text-green"></i> By Ben Carter</span>
+                        </div>
+                        <h1 class="post-title">Isolation Forest vs. SVM: Choosing the Right Algorithm for Anomaly Detection</h1>
+                        <p class="post-excerpt">Dive into the technical heart of StockPulse. We compare two powerful unsupervised learning algorithms, Isolation Forest and One-Class SVM, for identifying outliers in financial data.</p>
+                    </header>
+                    
+                    <div class="featured-image">
+                        <img src="https://picsum.photos/id/43/1200/600" alt="Two paths diverging in a forest, representing algorithm choice">
+                    </div>
+
+                    <div class="post-body">
+                        <p>At the core of any anomaly detection system is a powerful algorithm. The choice of algorithm can significantly impact performance, speed, and accuracy. In the StockPulse project, our SRS highlights two excellent candidates for this task: <strong>Isolation Forest</strong> and <strong>Support Vector Machine (SVM)</strong>.</p>
+                        
+                        <h2>1. Isolation Forest</h2>
+                        <p>This algorithm works on a simple yet brilliant principle: anomalies are "few and different," which makes them easier to isolate. The algorithm builds a forest of random decision trees. For each tree, it randomly partitions the data until every data point is isolated. Anomalous points, being different, will typically require fewer partitions to be isolated and will therefore have a shorter average path length in the trees.</p>
+                        <p><strong>Pros:</strong> It's computationally efficient, works well with large datasets, and doesn't require data normalization.</p>
+                        
+                        <h2>2. One-Class SVM</h2>
+                        <p>A standard SVM is used for classification between two or more classes. A One-Class SVM, however, is an unsupervised algorithm trained on only one class of data—the "normal" data. It learns a boundary or a "hypersphere" that encloses the normal data points. Any new data point that falls outside this boundary is then classified as an anomaly.</p>
+                        <p><strong>Pros:</strong> It's effective in high-dimensional spaces and is robust to some noise in the training data.</p>
+
+                        <blockquote>
+                            "All models are wrong, but some are useful." - George Box
+                        </blockquote>
+                        
+                        <h2>Which One is Better for Financial Data?</h2>
+                        <p>There's no single "best" algorithm for all scenarios. Isolation Forest often performs faster and is less sensitive to parameter tuning, making it a great starting point for systems that need to process data quickly. One-Class SVM can be very powerful but may require more careful preprocessing and hyperparameter tuning to get right.</p>
+
+                        <p>For StockPulse, we leverage the strengths of these approaches to build a robust detection module. By understanding the theory behind the tools, we can make more informed decisions and build a more effective system for our users.</p>
+                    </div>
+
+                    <footer class="post-footer">
+                        <div class="tags-container">
+                            <strong>Tags:</strong>
+                            <a href="#">Isolation Forest</a>
+                            <a href="#">SVM</a>
+                            <a href="#">Machine Learning</a>
+                            <a href="#">Data Science</a>
+                        </div>
+                        <div class="share-container">
+                            <strong>Share:</strong>
+                            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </footer>
+                </article>
+
+                <div class="author-box animate-on-scroll">
+                    <img src="https://i.pravatar.cc/150?img=68" alt="Author Ben Carter">
+                    <div class="author-info">
+                        <h3>About Ben Carter</h3>
+                        <p>Ben is a Ph.D. in Computer Science and the chief architect behind the StockPulse detection engine. His research focuses on unsupervised learning and efficient algorithms for large-scale data analysis.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+ <footer class="main-footer">
+        <div class="container">
+            
+            <div class="footer-bottom">
+                <a href="{{ url_for('home') }}">HOME</a>
+                <a href="{{ url_for('about') }}">ABOUT</a>
+                <a href="{{ url_for('blog') }}">BLOG</a>
+               
+            </div>
+        </div>
+    </footer>
+    
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>

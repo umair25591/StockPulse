@@ -1,12 +1,16 @@
-<header class="h-16 flex items-center justify-between px-6 flex-shrink-0 mt-2 mx-4 ml-0 glass-effect">
-    <div>        
+<header class="h-16 flex items-center justify-between px-4 md:px-6 flex-shrink-0 mt-4 mx-4 glass-effect">
+    <div class="flex items-center gap-4">
+        <button id="open-sidebar-button" class="p-2 rounded-full hover:bg-zinc-800 lg:hidden">
+            <i data-lucide="menu"></i>
+        </button>
+
         {% if session.first_name %}
-            <h2 class="text-lg font-semibold text-white">Welcome back, {{ session.first_name }}!</h2>
+            <h2 class="text-base lg:text-lg font-semibold text-white">Welcome back, {{ session.first_name }}!</h2>
         {% else %}
-            <h2 class="text-lg font-semibold text-white">Welcome back!</h2>
+            <h2 class="text-base lg:text-lg font-semibold text-white">Welcome back!</h2>
         {% endif %}
     </div>
-    <div class="flex items-center space-x-4">
+    <div class="flex items-center space-x-2 md:space-x-4">
         <button class="p-2 rounded-full hover:bg-zinc-800">
             <i data-lucide="bell"></i>
         </button>

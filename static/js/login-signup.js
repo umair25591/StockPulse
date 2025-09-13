@@ -1,13 +1,30 @@
-const loginBox = document.querySelector('.login-box');
-const showSignupLink = document.getElementById('show-signup');
-const showLoginLink = document.getElementById('show-login');
+const formContainer = document.querySelector('.form-container-main');
+const showSignupBtn = document.getElementById('show-signup-btn');
+const showLoginBtn = document.getElementById('show-login-btn');
 
-showSignupLink.addEventListener('click', (e) => {
+showSignupBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    loginBox.classList.add('active-slide');
+    formContainer.classList.add('active-slide');
 });
 
-showLoginLink.addEventListener('click', (e) => {
+showLoginBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    loginBox.classList.remove('active-slide');
+    formContainer.classList.remove('active-slide');
 });
+
+const profilePictureInput = document.getElementById('profile_picture');
+const imagePreview = document.getElementById('image-preview');
+
+if (profilePictureInput && imagePreview) {
+    profilePictureInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+}
