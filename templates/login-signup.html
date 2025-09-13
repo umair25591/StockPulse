@@ -11,6 +11,19 @@
         rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login-signup.css') }}">
 </head>
+<style>
+    .form-errors {
+        color: #ff4d4d;
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+    }
+
+    .flash-messages div {
+        color: #ff4d4d;
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+    }
+</style>
 
 <body>
 
@@ -45,20 +58,37 @@
                         <div class="links">
                             <a href="#">Forgot Password?</a>
                         </div>
+                        <div class="form-errors"></div>
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                <div class="flash-messages">
+                                {% for category, message in messages %}
+                                    <div class="flash-message {{ category }}">{{ message }}</div>
+                                {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
                         <button type="submit" class="submit-btn">LOGIN</button>
                     </form>
 
-                    <form id="signup-form" method="POST" action="{{ url_for('signup') }}"
-                        enctype="multipart/form-data">
+                    <form id="signup-form" method="POST" action="{{ url_for('signup') }}" enctype="multipart/form-data">
                         <h2>Create <span>Account</span></h2>
                         <div class="profile-picture-container">
                             <label for="profile_picture" class="profile-picture-label">
-                                <img src="https://api.dicebear.com/7.x/initials/svg?seed=?" alt="Profile Preview" id="image-preview">
+                                <img src="https://api.dicebear.com/7.x/initials/svg?seed=?" alt="Profile Preview"
+                                    id="image-preview">
                                 <div class="upload-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="17 8 12 3 7 8"></polyline>
+                                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                                    </svg>
                                 </div>
                             </label>
-                            <input type="file" name="profile_picture" id="profile_picture" accept="image/*" required="required" style="display: none;">
+                            <input type="file" name="profile_picture" id="profile_picture" accept="image/*"
+                                required="required" style="display: none;">
                         </div>
                         <div class="name-fields">
                             <div class="input-box">
@@ -86,6 +116,7 @@
                             <input type="text" name="address" required="required" autocomplete="street-address">
                             <label>Home Address</label>
                         </div>
+                        <div class="form-errors" style="margin-top: 10px;"></div>
                         <button type="submit" class="submit-btn">SIGN UP</button>
                     </form>
                 </div>

@@ -22,7 +22,19 @@ $(document).ready(function () {
     const $csvPreviewTable = $("#csv-preview-table");
     const $downloadBtn = $("#download-csv");
     const $downloadChartBtn = $("#download-chart");
-    
+
+
+    function resetToInitialState() {
+        $("#file-input").val("");
+        $("#file-preview").hide();
+        $("#analyze-btn").prop("disabled", true);
+        $("#loader").hide();
+        $("#results").hide().empty();
+        $("#results-container").hide();
+        $("#charts").hide().empty();
+        $("#welcome-message").show();
+    }
+
 
     function destroyActiveChart() {
         if (stockChart) stockChart.destroy();
@@ -174,11 +186,11 @@ $(document).ready(function () {
     function renderFeatureChart() {
         destroyActiveChart();
         const { clustered, anomalies } = analysisData.results;
-        
+
         const featuresToCompare = ['Return', 'Volume', 'Vol_14', 'RSI_14'];
-        
+
         const calculateAverages = (data, features) => {
-            const sums = features.reduce((acc, f) => ({...acc, [f]: 0}), {});
+            const sums = features.reduce((acc, f) => ({ ...acc, [f]: 0 }), {});
             data.forEach(d => {
                 features.forEach(f => {
                     sums[f] += Math.abs(d[f] || 0);
@@ -285,6 +297,19 @@ $(document).ready(function () {
         }
     }
 
+    function showError(message) {
+        const errorBox = document.getElementById("error-box");
+        errorBox.textContent = message;
+        errorBox.style.display = "block";
+    }
+
+    function clearError() {
+        const errorBox = document.getElementById("error-box");
+        errorBox.textContent = "";
+        errorBox.style.display = "none";
+    }
+
+
 
 
 
@@ -366,11 +391,9 @@ $(document).ready(function () {
                 if (window.lucide) window.lucide.createIcons();
             },
             error: (xhr) => {
-                alert("Error: " + (xhr.responseJSON?.error || "An unknown server error occurred."));
-                $analysisLoader.addClass('hidden');
-                $welcomeMessage.show();
-                $downloadBtn.addClass('hidden');
-                $downloadChartBtn.addClass('hidden');
+
+                resetToInitialState();
+                showError(xhr.responseJSON?.error || "An unknown server error occurred.");
             },
             complete: () => {
                 if (!analysisData.error) {
@@ -383,21 +406,21 @@ $(document).ready(function () {
         });
     });
 
-    $downloadBtn.on("click", function() {
+    $downloadBtn.on("click", function () {
         if (downloadFilename) {
             window.location.href = '/download_results/' + downloadFilename;
         }
     });
 
-    $downloadChartBtn.on("click", function() {
+    $downloadChartBtn.on("click", function () {
         if (stockChart) {
 
             const imageUrl = stockChart.toBase64Image();
-            
+
             const link = document.createElement('a');
             link.href = imageUrl;
             link.download = 'stock_analysis_chart.png';
-            
+
             link.click();
         }
     });

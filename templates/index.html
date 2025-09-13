@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF--8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,13 +20,32 @@
         align-items: center;
     }
 </style>
+<style>
+    .hero {
+        padding: 80px 20px;
+    }
+
+    .hero-text h1 {
+        font-size: 3.5rem;
+        font-weight: bold;
+    }
+
+    .glow {
+        color: #00ff88;
+        text-shadow: 0 0 0px #00ff88, 0 0 0px #00ff88, 0 0 7px #00ff88;
+    }
+</style>
+
 <body>
 
-    <spline-viewer id="spline-background" url="https://prod.spline.design/BuD8cTwsezQIv0R0/scene.splinecode"></spline-viewer>
+    <spline-viewer id="spline-background"
+        url="https://prod.spline.design/BuD8cTwsezQIv0R0/scene.splinecode"></spline-viewer>
 
     <header class="main-header">
         <div class="container">
-            <a href="{{ url_for('home') }}" class="logo logo-design-box"><img src="{{ url_for('static', filename='images/logomain.png') }}" width="95px" alt="Data Science in Stock Market"></a>
+            <a href="{{ url_for('home') }}" class="logo logo-design-box"><img
+                    src="{{ url_for('static', filename='images/logomain.png') }}" width="95px"
+                    alt="Data Science in Stock Market"></a>
             <nav class="main-nav">
                 <a href="{{ url_for('home') }}" class="active">HOME</a>
                 <a href="{{ url_for('about') }}">ABOUT</a>
@@ -38,30 +58,35 @@
     </header>
 
     <main>
-        <section class="hero">
-            <div class="container grid">
-                <div class="hero-text">
+        <section class="hero" style="padding-bottom: 0 !important;">
+            <div class="container grid"
+                style="display: flex; justify-content: center; align-items: center; text-align: center; min-height: 70vh;">
+                <div class="hero-text" style="display: flex; flex-direction: column; align-items: center;">
                     <h1 class="animate-on-scroll">
-                        <span class="text-green">INTELLIGENT</span> INSIGHTS, SMARTER <span class="text-green">INVESTING</span>
+                        <span class="text-green glow">INTELLIGENT</span> INSIGHTS, SMARTER
+                        <span class="text-green glow">INVESTING</span>
                     </h1>
-                    <p class="animate-on-scroll">Leverage our AI-powered analytics and real-time data to navigate the markets with confidence.</p>
+                    <p class="animate-on-scroll" style="text-align: center;">
+                        Leverage our AI-powered analytics and real-time data to navigate the markets with confidence.
+                    </p>
                     <a href="#features" class="btn animate-on-scroll">GETTING STARTED</a>
-                </div>
-                <div class="about-image animate-on-scroll">
-                    <img src="{{ url_for('static', filename='images/logomain.png') }}" style="max-width: 75%;" alt="Data Science in Stock Market">
                 </div>
             </div>
         </section>
 
-        <section class="about section-padding">
+        <section class="about section-padding" style="padding-top: 0 !important;">
             <div class="container grid">
                 <div class="about-image animate-on-scroll">
-                    <img src="{{ url_for('static', filename='images/main.png') }}" style="width: 100%;" alt="Data Science in Stock Market">
+                    <img src="{{ url_for('static', filename='images/main.png') }}" style="width: 100%;"
+                        alt="Data Science in Stock Market">
                 </div>
                 <div class="about-text">
                     <h2 class="animate-on-scroll">UNLOCK YOUR TRADING <span class="text-green">POTENTIAL</span></h2>
-                    <p class="animate-on-scroll">StockPulse is a comprehensive analytics platform designed for modern investors. We provide the tools and insights you need to make informed, data-driven decisions, from tracking portfolios to identifying market trends before they happen.</p>
-                    <a href="{{ url_for('about') }}" class="btn btn-download animate-on-scroll"><i class="fas fa-info-circle"></i> LEARN MORE</a>
+                    <p class="animate-on-scroll">StockPulse is a comprehensive analytics platform designed for modern
+                        investors. We provide the tools and insights you need to make informed, data-driven decisions,
+                        from tracking portfolios to identifying market trends before they happen.</p>
+                    <a href="{{ url_for('about') }}" class="btn btn-download animate-on-scroll"><i
+                            class="fas fa-info-circle"></i> LEARN MORE</a>
                 </div>
             </div>
         </section>
@@ -70,23 +95,27 @@
             <div class="container">
                 <p class="section-title animate-on-scroll">OUR TECHNOLOGY</p>
                 <h2 class="animate-on-scroll">PLATFORM FEATURES & CAPABILITIES</h2>
-                <p class="animate-on-scroll">Our platform is built on a foundation of cutting-edge technology to give you a competitive edge.</p>
-                
+                <p class="animate-on-scroll">Our platform is built on a foundation of cutting-edge technology to give
+                    you a competitive edge.</p>
+
                 <div class="grid">
                     <div class="exp-item animate-on-scroll">
                         <span>REAL-TIME ANALYSIS</span>
                         <h4>LIVE MARKET DATA</h4>
-                        <p>Access up-to-the-second market data, news, and analytics across thousands of global assets.</p>
+                        <p>Access up-to-the-second market data, news, and analytics across thousands of global assets.
+                        </p>
                     </div>
                     <div class="exp-item animate-on-scroll">
                         <span>PREDICTIVE MODELS</span>
                         <h4>AI-POWERED SIGNALS</h4>
-                        <p>Utilize our machine learning algorithms to identify potential trading signals and market shifts.</p>
+                        <p>Utilize our machine learning algorithms to identify potential trading signals and market
+                            shifts.</p>
                     </div>
                     <div class="exp-item animate-on-scroll">
                         <span>PORTFOLIO MANAGEMENT</span>
                         <h4>ADVANCED TRACKING</h4>
-                        <p>Monitor your investments with our intuitive portfolio tracker and performance visualization tools.</p>
+                        <p>Monitor your investments with our intuitive portfolio tracker and performance visualization
+                            tools.</p>
                     </div>
                     <div class="exp-item animate-on-scroll">
                         <span>MARKET SENTIMENT</span>
@@ -128,18 +157,21 @@
             <div class="container">
                 <p class="section-title animate-on-scroll">WHAT WE OFFER</p>
                 <h2 class="animate-on-scroll">TOOLS FOR EVERY INVESTOR</h2>
-                <p class="animate-on-scroll">From beginner to expert, our suite of tools is designed to enhance your trading strategy.</p>
-                
+                <p class="animate-on-scroll">From beginner to expert, our suite of tools is designed to enhance your
+                    trading strategy.</p>
+
                 <div class="grid">
                     <div class="service-card animate-on-scroll">
                         <i class="fas fa-chart-line"></i>
                         <h3>ADVANCED CHARTING</h3>
-                        <p>Utilize a full suite of technical indicators and drawing tools to perform in-depth market analysis.</p>
+                        <p>Utilize a full suite of technical indicators and drawing tools to perform in-depth market
+                            analysis.</p>
                     </div>
                     <div class="service-card animate-on-scroll">
                         <i class="fas fa-robot"></i>
                         <h3>AI PREDICTIVE ANALYTICS</h3>
-                        <p>Leverage our proprietary AI to get predictive insights on stock performance and market trends.</p>
+                        <p>Leverage our proprietary AI to get predictive insights on stock performance and market
+                            trends.</p>
                     </div>
                     <div class="service-card animate-on-scroll">
                         <i class="fas fa-tachometer-alt"></i>
@@ -149,9 +181,9 @@
                 </div>
             </div>
         </section>
-        
+
         <div class="container section-padding">
-             <div class="section-header">
+            <div class="section-header">
                 <div class="section-header-text animate-on-scroll">
                     <p class="section-title">TESTIMONIALS</p>
                     <h2>WHAT OUR USERS SAY</h2>
@@ -164,15 +196,16 @@
             </div>
             <div class="testimonial-box animate-on-scroll" style="text-align: center; padding: 30px;">
                 <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                <p class="quote-text">STOCKPULSE HAS COMPLETELY CHANGED HOW I APPROACH TRADING. THE AI-POWERED INSIGHTS ARE A GAME-CHANGER, GIVING ME THE CONFIDENCE TO MAKE BOLDER MOVES.</p>
+                <p class="quote-text">STOCKPULSE HAS COMPLETELY CHANGED HOW I APPROACH TRADING. THE AI-POWERED INSIGHTS
+                    ARE A GAME-CHANGER, GIVING ME THE CONFIDENCE TO MAKE BOLDER MOVES.</p>
                 <div class="client-info">
                     <img src="https://i.imgur.com/GprO3kI.jpg" alt="Mark Chen">
                     <p>Mark Chen, Active Trader</p>
                 </div>
             </div>
         </div>
-        
-      
+
+
 
         <section class="newsletter section-padding">
             <div class="container">
@@ -187,12 +220,12 @@
 
     <footer class="main-footer">
         <div class="container">
-            
+
             <div class="footer-bottom">
                 <a href="{{ url_for('home') }}">HOME</a>
                 <a href="{{ url_for('about') }}">ABOUT</a>
                 <a href="{{ url_for('blog') }}">BLOG</a>
-               
+
             </div>
         </div>
     </footer>
@@ -200,4 +233,5 @@
     <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 
 </body>
+
 </html>

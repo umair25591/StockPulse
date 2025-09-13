@@ -1,5 +1,6 @@
 import csv
 import os
+import re
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session, flash, send_from_directory
 import pandas as pd
 from werkzeug import Response
@@ -134,31 +135,45 @@ def login():
 
 @app.route('/signup', methods=['POST'])
 def signup():
-    first_name = request.form.get("first_name")
-    last_name = request.form.get("last_name")
-    email = request.form.get("email")
+    first_name = request.form.get("first_name", "").strip()
+    last_name = request.form.get("last_name", "").strip()
+    email = request.form.get("email", "").strip()
     password = request.form.get("password")
     role = request.form.get("role")
-    address = request.form.get("address")
+    address = request.form.get("address", "").strip()
     profile_picture = request.files.get("profile_picture")
 
-    # check if user exists
-    if users_collection.find_one({"email": email}):
-        flash("Email already registered!", "danger")
+    required_fields = {
+        "First Name": first_name, "Last Name": last_name, "Email": email,
+        "Password": password, "Role": role
+    }
+    
+    for field_name, value in required_fields.items():
+        if not value:
+            flash(f"{field_name} is required.", "danger")
+            return redirect(url_for("login"))
+
+    if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        flash("Invalid email address format.", "danger")
         return redirect(url_for("login"))
 
-    # Save profile picture
+    if users_collection.find_one({"email": email}):
+        flash("This email address is already registered.", "danger")
+        return redirect(url_for("login"))
+
     picture_filename = None
-    if profile_picture:
-        ext = profile_picture.filename.rsplit(".", 1)[-1]
+    if profile_picture and profile_picture.filename:
+        if not allowed_file(profile_picture.filename):
+            flash("Invalid file format. Please use PNG, JPG, JPEG, or GIF.", "danger")
+            return redirect(url_for("login"))
+        
+        ext = profile_picture.filename.rsplit('.', 1)[1].lower()
         picture_filename = f"{uuid.uuid4().hex}.{ext}"
         save_path = os.path.join(PROFILE_UPLOAD_FOLDER, secure_filename(picture_filename))
         profile_picture.save(save_path)
 
-    # Hash password
     hashed_pw = bcrypt.generate_password_hash(password).decode('utf-8')
 
-    # Insert user in MongoDB
     users_collection.insert_one({
         "first_name": first_name,
         "last_name": last_name,
@@ -166,12 +181,13 @@ def signup():
         "password": hashed_pw,
         "role": role,
         "address": address,
-        "profile_picture": picture_filename,  # stored as filename, not full path
+        "profile_picture": picture_filename,
         "created_at": pd.Timestamp.now().isoformat()
     })
 
-    flash("Signup successful! Please log in.", "success")
+    flash("Signup successful! You can now log in.", "success")
     return redirect(url_for("login"))
+
 
 @app.route('/logout')
 def logout():
@@ -377,6 +393,25 @@ def run_analysis():
         input_path = os.path.join(app.config['UPLOAD_FOLDER'], input_filename)
         
         file.save(input_path)
+
+        expected_columns = ['Date', 'Close', 'High', 'Low', 'Open', 'Volume']
+        try:
+            uploaded_header = pd.read_csv(input_path, nrows=0).columns.tolist()
+            
+            if uploaded_header != expected_columns:
+                os.remove(input_path)
+                error_message = (
+                    "Invalid CSV format. The header is incorrect. "
+                    f"Please ensure the columns are exactly: {', '.join(expected_columns)}"
+                )
+                return jsonify({'error': error_message}), 400
+
+        except Exception as e:
+            os.remove(input_path)
+            app.logger.error(f"Error validating CSV header for {original_filename}: {e}")
+            return jsonify({
+                'error': 'The uploaded file could not be read. Please ensure it is a valid, uncorrupted CSV.'
+            }), 400
 
         try:
             results = runModel(

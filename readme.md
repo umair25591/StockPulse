@@ -82,7 +82,7 @@ export PATH=$SPARK_HOME/bin:$PATH
 Clone the repository:
 ```bash
 git clone <https://github.com/umair25591/StockPulse.git>
-cd <StockPulse>
+cd <your_project_directory>
 ```
 
 Create and activate a virtual environment:
@@ -93,7 +93,6 @@ python -m venv venv
 
 .\venv\Scripts\activate
 
-source venv/bin/activate
 ```
 
 Install dependencies:
